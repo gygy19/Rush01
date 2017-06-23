@@ -5,21 +5,15 @@ using UnityEngine.AI;
 
 public class PlayerController : MonoBehaviour {
 
-	// Use this for initialization
-
-	private GameObject		destination;
-
-	public GameObject		moveCursor;
-
 	public Camera 			Camera;
-
-	public Vector3			WhereIGo;
+	public NavMeshAgent		Agent;
+	bool					isMooving;
 
 	void Start () {
-		destination = GameObject.Find ("ToGo");
-		Camera = GameObject.Find ("Main Camera").GetComponent<Camera>();
+		Camera = GameObject.Find ("Main Camera").GetComponent<Camera> ();
+		Agent = GetComponent<NavMeshAgent> ();
+		isMooving = false;
 	}
-
 
 	Vector3 GetMousePosition()
 	{
@@ -29,18 +23,39 @@ public class PlayerController : MonoBehaviour {
 		return (hitInfo.point);
 	}
 
+	void catchMovement()
+	{
+		if (Input.GetMouseButtonDown(MouseClickEnum.RIGHT_CLICK)) {
+			Vector3 position = GetMousePosition ();
+			if (position.x != 0 && position.y != 0 && position.z != 0) {
+				GetComponent<NavMeshAgent> ().SetDestination (position);
+				GetComponent<Animator> ().SetFloat ("Forward", 1);
+				isMooving = true;
+			}
+		}
+	}
+
+	void StopMovement()
+	{
+		isMooving = false;
+		Debug.Log ("Stopped");
+	}
+
+	void followCamera()
+	{
+		Camera.transform.position = new Vector3 (this.transform.position.x, Camera.transform.position.y, Camera.transform.position.z);
+	}
 
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetMouseButtonDown(0)) {
-			Vector3 position = GetMousePosition ();
-				//destination.transform.localPosition = Camera.ScreenToWorldPoint (Input.mousePosition);
-			if (position.x != 0 && position.y != 0 && position.z != 0) {
-				GetComponent<NavMeshAgent> ().SetDestination (position); 
-				GetComponent<Animator> ().SetFloat ("Forward", 1); 
-			}
+		catchMovement ();
+		if (Agent.remainingDistance <= 4f && Agent.remainingDistance != 0) {
+			StopMovement ();
+			Debug.Log (Agent.remainingDistance);
 		}
-
+		//StopMovement ();
+		followCamera ();
+		//Agent.
 		/*if (Input.GetMouseButtonUp(0))
 			GetComponent<Animator> ().SetFloat ("Forward", 0);
 		
@@ -53,6 +68,5 @@ public class PlayerController : MonoBehaviour {
 			if (Physics.Raycast(ray))
 				Instantiate(moveCursor, transform.position, transform.rotation);
 		}*/
-		
 	}
 }
