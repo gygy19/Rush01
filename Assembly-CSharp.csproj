@@ -6,7 +6,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{25B866E7-5884-6C59-D54F-A78CD483DAF6}</ProjectGuid>
+    <ProjectGuid>{EE54591C-D809-7C79-07CB-48320C691713}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -46,8 +46,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\PyroParticles\Demo\DemoScript.cs" />
-     <Compile Include="Assets\PyroParticles\Demo\DemoScriptEditor.cs" />
      <Compile Include="Assets\PyroParticles\Prefab\Script\FireBaseScript.cs" />
      <Compile Include="Assets\PyroParticles\Prefab\Script\FireCollisionForwardScript.cs" />
      <Compile Include="Assets\PyroParticles\Prefab\Script\FireConstantBaseScript.cs" />
@@ -66,6 +64,7 @@
      <Compile Include="Assets\Scripts\UI\ButtonScript.cs" />
      <Compile Include="Assets\Scripts\UI\UIBannerScript.cs" />
      <Compile Include="Assets\Scripts\UI\UICaracteristiquesScript.cs" />
+     <Compile Include="Assets\Scripts\UI\UISpellsScript.cs" />
      <Compile Include="Assets\Scripts\UI\UIStatScript.cs" />
      <None Include="Assets\PyroParticles\Prefab\Materials\AdditiveTintable.shader" />
      <None Include="Assets\Standard Assets\Environment\Water\Water4\Shaders\FXWater4Simple.shader" />
@@ -106,7 +105,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{E0A31108-180A-D338-6B04-0053FFEA98C9}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
+      <Project>{9176624F-8856-6347-90D8-C81F4EAC1930}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
