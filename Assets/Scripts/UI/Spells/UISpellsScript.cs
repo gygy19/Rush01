@@ -6,10 +6,16 @@ public class UISpellsScript : MonoBehaviour {
 
 	public ButtonScript exitButton;
 	public GameObject[] contentObjects;
+	public UISpellScript[] spellsSlots;
 	public bool visible = false;
+
+	public RPGPlayer player;
 
 	// Use this for initialization
 	void Start () {
+		foreach (Spell spell in player.spells) {
+			addSpell (spell);
+		}
 		foreach (GameObject o in contentObjects) {
 			o.SetActive (false);
 		}
@@ -27,6 +33,28 @@ public class UISpellsScript : MonoBehaviour {
 		this.visible = visible;
 		foreach (GameObject o in contentObjects) {
 			o.SetActive (visible);
+		}
+	}
+
+	public void levelUpSpell(Spell spell) {
+		//TODO
+	}
+
+	public void addSpell(Spell spell) {
+		foreach (UISpellScript spellSlot in spellsSlots) {
+			if (spellSlot.spell == null) {
+				spellSlot.addSpell (spell);
+				break ;
+			}
+		}
+	}
+
+	public void removeSpell(Spell spell) {
+		foreach (UISpellScript spellSlot in spellsSlots) {
+			if (spellSlot.spell != null && spell == spellSlot.spell) {
+				spellSlot.removeSpell();
+				break ;
+			}
 		}
 	}
 }
