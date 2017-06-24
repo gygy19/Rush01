@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class PlayerController : MonoBehaviour {
 
 	public Camera 			Camera;
-	public NavMeshAgent		Agent;
+	private NavMeshAgent	Agent;
 	bool					isMooving;
 	public bool 			lockedCamera;
 
@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour {
 			Vector3 position = GetMousePosition ();
 			if (position.x != 0 && position.y != 0 && position.z != 0) {
 				Agent.SetDestination (position);
-				GetComponent<Animator> ().SetFloat (PlayerMovementEnum.MOVEMENT_FORWARD, 1);
+				GetComponent<Animator> ().SetFloat (MovementEnum.MOVEMENT_FORWARD, 1);
 				isMooving = true;
 			}
 		}
@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour {
 		Agent.velocity = Vector3.zero;
 		Agent.ResetPath();
 		isMooving = false;
-		GetComponent<Animator> ().SetFloat (PlayerMovementEnum.MOVEMENT_FORWARD, 0);
+		GetComponent<Animator> ().SetFloat (MovementEnum.MOVEMENT_FORWARD, 0);
 	}
 
 	void followCamera()

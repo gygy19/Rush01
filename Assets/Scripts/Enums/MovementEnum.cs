@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class PlayerMovementEnum
+public static class MovementEnum
 {
 	public const string MOVEMENT_FORWARD = "Forward";
 }
