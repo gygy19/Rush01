@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 		
-	void StopMovement()
+	public void StopMovement()
 	{
 		Agent.velocity = Vector3.zero;
 		Agent.ResetPath();

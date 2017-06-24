@@ -19,7 +19,11 @@ public class FireBall : Spell {
 	{
 		Vector3 pos = RPGPlayer.Player.transform.position;
 		pos.y += 4;
-		GameObject fire = GameObject.Instantiate(ball, pos, Quaternion.LookRotation( Constants.GetMousePosition()));
+		GameObject fire = GameObject.Instantiate(ball, pos, Quaternion.LookRotation(Constants.GetMousePosition() - RPGPlayer.Player.transform.position));
+
+		RPGPlayer.Player.GetComponent<PlayerController> ().StopMovement ();
+		RPGPlayer.Player.transform.rotation = Quaternion.LookRotation(Constants.GetMousePosition() - RPGPlayer.Player.transform.position);
+
 	}
 
 	public override string getUpgrade()
