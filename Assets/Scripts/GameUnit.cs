@@ -48,6 +48,11 @@ public class GameUnit : MonoBehaviour {
 		return this.hpBase + this.constitution;
 	}
 
+	public int getMana()
+	{
+		return this.mana;
+	}
+
 	public int getMaxMana()
 	{
 		return this.manaBase + this.intel * MULTIPLICATEURINTELMANA;

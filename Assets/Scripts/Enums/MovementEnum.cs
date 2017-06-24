@@ -1,0 +1,8 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public static class MovementEnum
+{
+	public const string MOVEMENT_FORWARD = "Forward";
+}

@@ -6,13 +6,22 @@ using UnityEngine.AI;
 public class PlayerController : MonoBehaviour {
 
 	public Camera 			Camera;
-	public NavMeshAgent		Agent;
+	private NavMeshAgent	Agent;
 	bool					isMooving;
+	public bool 			lockedCamera;
 
 	void Start () {
 		Camera = GameObject.Find ("Main Camera").GetComponent<Camera> ();
 		Agent = GetComponent<NavMeshAgent> ();
 		isMooving = false;
+		lockedCamera = false;
+		setDefaultCameraPostion ();
+	}
+
+	void setDefaultCameraPostion()
+	{
+		Camera.transform.localPosition = new Vector3 (66f, 64f, 189f);
+		Camera.transform.localRotation = new Quaternion (0.5f, 0.0f, 0.01f, 0.9f);
 	}
 
 	Vector3 GetMousePosition()
@@ -28,45 +37,35 @@ public class PlayerController : MonoBehaviour {
 		if (Input.GetMouseButtonDown(MouseClickEnum.RIGHT_CLICK)) {
 			Vector3 position = GetMousePosition ();
 			if (position.x != 0 && position.y != 0 && position.z != 0) {
-				GetComponent<NavMeshAgent> ().SetDestination (position);
-				GetComponent<Animator> ().SetFloat ("Forward", 1);
+				Agent.SetDestination (position);
+				GetComponent<Animator> ().SetFloat (MovementEnum.MOVEMENT_FORWARD, 1);
 				isMooving = true;
 			}
 		}
 	}
-
+		
 	void StopMovement()
 	{
+		Agent.velocity = Vector3.zero;
+		Agent.ResetPath();
 		isMooving = false;
-		Debug.Log ("Stopped");
+		GetComponent<Animator> ().SetFloat (MovementEnum.MOVEMENT_FORWARD, 0);
 	}
 
 	void followCamera()
 	{
-		Camera.transform.position = new Vector3 (this.transform.position.x, Camera.transform.position.y, Camera.transform.position.z);
+		if (!lockedCamera) {
+			Camera.transform.position = new Vector3 (this.transform.position.x, Camera.transform.position.y, Camera.transform.position.z);
+		} else { 
+			Camera.transform.position = new Vector3 (this.transform.position.x, Camera.transform.position.y, this.transform.position.z - 20f);
+		}
 	}
 
-	// Update is called once per frame
 	void Update () {
 		catchMovement ();
-		if (Agent.remainingDistance <= 4f && Agent.remainingDistance != 0) {
+		if (Agent.remainingDistance <= 3f && Agent.remainingDistance != 0) {
 			StopMovement ();
-			Debug.Log (Agent.remainingDistance);
 		}
-		//StopMovement ();
 		followCamera ();
-		//Agent.
-		/*if (Input.GetMouseButtonUp(0))
-			GetComponent<Animator> ().SetFloat ("Forward", 0);
-		
-		if (Input.GetKey(KeyCode.A))
-			GetComponent<Animator> ().SetBool ("Attack", true);
-
-		if (Input.GetKeyDown(KeyCode.C))
-		{
-			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-			if (Physics.Raycast(ray))
-				Instantiate(moveCursor, transform.position, transform.rotation);
-		}*/
 	}
 }
