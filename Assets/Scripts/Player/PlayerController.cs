@@ -15,6 +15,13 @@ public class PlayerController : MonoBehaviour {
 		Agent = GetComponent<NavMeshAgent> ();
 		isMooving = false;
 		lockedCamera = false;
+		setDefaultCameraPostion ();
+	}
+
+	void setDefaultCameraPostion()
+	{
+		Camera.transform.localPosition = new Vector3 (66f, 64f, 189f);
+		Camera.transform.localRotation = new Quaternion (0.5f, 0.0f, 0.01f, 0.9f);
 	}
 
 	Vector3 GetMousePosition()
