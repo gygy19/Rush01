@@ -9,6 +9,7 @@ public class UIBannerScript : MonoBehaviour{
 	public ButtonScript[] cases;
 
 	public UICaracteristiquesScript caracteristiquePanel;
+	public UISpellsScript spellsPanel;
 	// Use this for initialization
 	void Start () {
 	}
@@ -38,6 +39,7 @@ public class UIBannerScript : MonoBehaviour{
 
 	public void OnOpenUISpells() {
 		Debug.Log ("Open Spells");
+		spellsPanel.setVisible (!spellsPanel.visible);
 	}
 
 	public void OnclickCase(ButtonScript button) {
