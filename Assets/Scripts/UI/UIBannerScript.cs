@@ -36,6 +36,10 @@ public class UIBannerScript : MonoBehaviour{
 		Debug.Log ("Open Inventory");
 	}
 
+	public void OnOpenUISpells() {
+		Debug.Log ("Open Spells");
+	}
+
 	public void OnclickCase(ButtonScript button) {
 		
 	}
