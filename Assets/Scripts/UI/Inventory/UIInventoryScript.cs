@@ -39,10 +39,13 @@ public class UIInventoryScript : MonoBehaviour {
 			if (c.isSelected) {
 
 				Debug.Log("Click On Case Inventory n: " + c.getCaseId());
-				/*if (c.item == null) {
-					//infosCase.//clean Image
-					lblInfos.text = "";//clean text
-				}*/
+				if (c.item == null) {
+					infosCase.removeItem ();
+					lblInfos.text = LBL_EMPTY_SELECTION;
+				} else {
+					infosCase.addItem (c.item);
+					lblInfos.text = c.item.name;
+				}
 				c.isSelected = false;
 			}
 		}
