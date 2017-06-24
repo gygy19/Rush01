@@ -78,6 +78,10 @@ public class GameUnit : MonoBehaviour {
 		return this.constitution;
 	}
 
+	public int getcompetancePoint() {
+		return this.competancePoint;
+	}
+
 	public int getLevel()
 	{
 		return (int)Mathf.Max (Mathf.Floor (8.7f * Mathf.Log ((float)this.exp + 111f) + -40f), 1f);

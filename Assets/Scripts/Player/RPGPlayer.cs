@@ -33,6 +33,8 @@ public class RPGPlayer : GameUnit {
 			this.useSpell (actif[2]);
 		if (Input.GetKeyDown (KeyCode.Alpha4) && actif[3] != -1)
 			this.useSpell (actif[3]);
+		if (Input.GetKey(KeyCode.A))
+			this.addExp (10);
 	}
 
 	public void setSpellActif(int[] spells)

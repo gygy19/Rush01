@@ -16,6 +16,7 @@ public class UICaracteristiquesScript : MonoBehaviour {
 	public UIStatScript Strength;
 	public UIStatScript Agility;
 	public UIStatScript Intelligence;
+	public UIStatScript Constitution;
 
 	public RPGPlayer player;
 
@@ -34,7 +35,9 @@ public class UICaracteristiquesScript : MonoBehaviour {
 			exitButton.isSelected = false;
 			setVisible (false);
 		}
+		_activeInputs ();
 		_updateStats ();
+		_upStats ();
 	}
 
 	public void setVisible(bool visible) {
@@ -44,13 +47,52 @@ public class UICaracteristiquesScript : MonoBehaviour {
 		}
 	}
 
+	private void _activeInputs() {
+		Debug.Log (player.getcompetancePoint ());
+		if (player.getcompetancePoint () > 0) {
+			Strength.buttonUp.active = true;
+			Strength.buttonUp.gameObject.SetActive(true);
+			Agility.buttonUp.active = true;
+			Agility.buttonUp.gameObject.SetActive(true);
+			Intelligence.buttonUp.active = true;
+			Intelligence.buttonUp.gameObject.SetActive(true);
+			Constitution.buttonUp.active = true;
+			Constitution.buttonUp.gameObject.SetActive (true);
+		} else {
+			Strength.buttonUp.active = false;
+			Agility.buttonUp.active = false;
+			Intelligence.buttonUp.active = false;
+			Constitution.buttonUp.active = false;
+		}
+	}
+
 	private void _updateStats() {
 		Level.UpdateStats (player.getLevel());
-		statsPoints.UpdateStats (10);
+		statsPoints.UpdateStats (player.getcompetancePoint());
 		Life.UpdateStats (player.getHp());
 		Mana.UpdateStats (player.getMana());
 		Strength.UpdateStats (player.getStr());
 		Agility.UpdateStats (player.getAgi());
 		Intelligence.UpdateStats (player.getIntel());
+		Constitution.UpdateStats (player.getConstitution ());
+	}
+
+	private void _upStats() {
+		if (Strength.buttonUp.isSelected) {
+			this.player.boostStr ();
+			Strength.buttonUp.isSelected = false;
+		}
+		if (Agility.buttonUp.isSelected) {
+			this.player.boostAgi ();
+			Agility.buttonUp.isSelected = false;
+		}
+		if (Intelligence.buttonUp.isSelected) {
+			this.player.boostIntel ();
+			Intelligence.buttonUp.isSelected = false;
+		}
+		if (Constitution.buttonUp.isSelected) {
+			this.player.boostConstitution ();
+			Constitution.buttonUp.isSelected = false;
+		}
 	}
 }
