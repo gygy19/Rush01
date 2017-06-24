@@ -54,25 +54,11 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
-	// Update is called once per frame
 	void Update () {
 		catchMovement ();
-		if (Agent.remainingDistance <= 2f && Agent.remainingDistance != 0) {
+		if (Agent.remainingDistance <= 3f && Agent.remainingDistance != 0) {
 			StopMovement ();
 		}
 		followCamera ();
-		//Agent.
-		/*if (Input.GetMouseButtonUp(0))
-			GetComponent<Animator> ().SetFloat ("Forward", 0);
-		
-		if (Input.GetKey(KeyCode.A))
-			GetComponent<Animator> ().SetBool ("Attack", true);
-
-		if (Input.GetKeyDown(KeyCode.C))
-		{
-			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-			if (Physics.Raycast(ray))
-				Instantiate(moveCursor, transform.position, transform.rotation);
-		}*/
 	}
 }
