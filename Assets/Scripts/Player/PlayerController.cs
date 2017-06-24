@@ -26,10 +26,14 @@ public class PlayerController : MonoBehaviour {
 
 	Vector3 GetMousePosition()
 	{
-		RaycastHit hitInfo;
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-		Physics.Raycast (ray, out hitInfo);
-		return (hitInfo.point);
+		RaycastHit[] hits = Physics.RaycastAll (ray);
+		foreach (RaycastHit hitInfo in hits)
+		{
+			if (hitInfo.collider.gameObject.name == "Terrain")
+				return (hitInfo.point); 
+		}
+		return this.transform.position;
 	}
 
 	void catchMovement()
