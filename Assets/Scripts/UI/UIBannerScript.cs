@@ -7,6 +7,8 @@ using UnityEngine.EventSystems;
 public class UIBannerScript : MonoBehaviour{
 
 	public ButtonScript[] cases;
+
+	public UICaracteristiquesScript caracteristiquePanel;
 	// Use this for initialization
 	void Start () {
 	}
@@ -27,6 +29,7 @@ public class UIBannerScript : MonoBehaviour{
 
 	public void OnOpenUICarac() {
 		Debug.Log ("Open Carac");
+		caracteristiquePanel.setVisible (!caracteristiquePanel.visible);
 	}
 
 	public void OnOpenUIInventory() {
