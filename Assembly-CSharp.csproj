@@ -6,7 +6,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{EE54591C-D809-7C79-07CB-48320C691713}</ProjectGuid>
+    <ProjectGuid>{173A726B-2E50-3439-32E3-956FA79C30A4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -57,15 +57,19 @@
      <Compile Include="Assets\Scripts\Enums\MouseClickEnum.cs" />
      <Compile Include="Assets\Scripts\Enums\MovementEnum.cs" />
      <Compile Include="Assets\Scripts\GameUnit.cs" />
+     <Compile Include="Assets\Scripts\Player\Item\Item.cs" />
+     <Compile Include="Assets\Scripts\Player\Item\ItemsTypes\Ressources.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
      <Compile Include="Assets\Scripts\Player\RPGPlayer.cs" />
      <Compile Include="Assets\Scripts\Player\Spell\FireBall.cs" />
      <Compile Include="Assets\Scripts\Player\Spell\Spell.cs" />
-     <Compile Include="Assets\Scripts\UI\ButtonScript.cs" />
-     <Compile Include="Assets\Scripts\UI\UIBannerScript.cs" />
-     <Compile Include="Assets\Scripts\UI\UICaracteristiquesScript.cs" />
-     <Compile Include="Assets\Scripts\UI\UISpellsScript.cs" />
-     <Compile Include="Assets\Scripts\UI\UIStatScript.cs" />
+     <Compile Include="Assets\Scripts\UI\Banner\UIBannerScript.cs" />
+     <Compile Include="Assets\Scripts\UI\Buttons\ButtonScript.cs" />
+     <Compile Include="Assets\Scripts\UI\Buttons\ItemCaseButtonScript.cs" />
+     <Compile Include="Assets\Scripts\UI\Caracteristiques\UICaracteristiquesScript.cs" />
+     <Compile Include="Assets\Scripts\UI\Caracteristiques\UIStatScript.cs" />
+     <Compile Include="Assets\Scripts\UI\Inventory\UIInventoryScript.cs" />
+     <Compile Include="Assets\Scripts\UI\Spells\UISpellsScript.cs" />
      <None Include="Assets\PyroParticles\Prefab\Materials\AdditiveTintable.shader" />
      <None Include="Assets\Standard Assets\Environment\Water\Water4\Shaders\FXWater4Simple.shader" />
      <None Include="Assets\Standard Assets\Environment\Water (Basic)\Shaders\FXWaterBasic.shader" />
@@ -105,7 +109,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{9176624F-8856-6347-90D8-C81F4EAC1930}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
+      <Project>{39B2A280-C50D-C001-F4F2-82C65D8E743C}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

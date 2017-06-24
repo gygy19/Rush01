@@ -10,6 +10,7 @@ public class UIBannerScript : MonoBehaviour{
 
 	public UICaracteristiquesScript caracteristiquePanel;
 	public UISpellsScript spellsPanel;
+	public UIInventoryScript inventoryPanel;
 	// Use this for initialization
 	void Start () {
 	}
@@ -35,6 +36,7 @@ public class UIBannerScript : MonoBehaviour{
 
 	public void OnOpenUIInventory() {
 		Debug.Log ("Open Inventory");
+		inventoryPanel.setVisible (!inventoryPanel.visible);
 	}
 
 	public void OnOpenUISpells() {
