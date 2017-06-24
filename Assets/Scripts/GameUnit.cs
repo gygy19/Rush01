@@ -116,9 +116,14 @@ public class GameUnit : MonoBehaviour {
 	{
 		this.exp += exp;
 		if (this.getLevel() > this.level) {
-			this.level++;
-			this.competancePoint += 5;
+			this.levelUp ();
 		}
+	}
+
+	virtual protected void levelUp()
+	{
+		this.level++;
+		this.competancePoint += 5;
 	}
 
 	public void boostStr()
