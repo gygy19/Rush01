@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class GameUnit : MonoBehaviour {
 
-	const int MULTIPLICATEURSTRHP = 2;
 	const int MULTIPLICATEURINTELMANA = 2;
-
+	const int VARIATIONDAMAGE = 5; 
 	private int hp;
-	private int exp = 0;
-	private int mana;
+	protected int exp = 0;
+	protected int mana;
 	private float timeRegenMana = 0;
+	private int competancePoint = 0;
+	private int level = 0;
 	[SerializeField]
-	private int str, agi, intel, hpBase, regenMana, manaBase;
+	protected int str, agi, intel ,constitution, hpBase, regenMana, manaBase;
 
 	protected void Start () {
 		this.hp = this.getMaxHp();
@@ -28,10 +29,15 @@ public class GameUnit : MonoBehaviour {
 				else
 					this.mana = getMaxMana ();
 			}
-			Debug.Log ("mana");
 		}
 		this.timeRegenMana += Time.deltaTime;
 	}
+
+	protected void setLevel(int l)
+	{
+		this.exp = (int)(Mathf.Exp((l - -40) / 8.7f) - 111);
+	}
+
 	public int getHp()
 	{
 		return this.hp;
@@ -39,12 +45,12 @@ public class GameUnit : MonoBehaviour {
 
 	public int getMaxHp()
 	{
-		return this.hpBase + this.str * MULTIPLICATEURSTRHP;
+		return this.hpBase + this.constitution;
 	}
 
 	public int getMaxMana()
 	{
-		return this.manaBase + this.str * MULTIPLICATEURINTELMANA;
+		return this.manaBase + this.intel * MULTIPLICATEURINTELMANA;
 	}
 
 	public int getStr()
@@ -62,9 +68,29 @@ public class GameUnit : MonoBehaviour {
 		return this.intel;
 	}
 
+	public int getConstitution()
+	{
+		return this.constitution;
+	}
+
 	public int getLevel()
 	{
 		return (int)Mathf.Max (Mathf.Floor (8.7f * Mathf.Log ((float)this.exp + 111f) + -40f), 1f);
+	}
+
+	public int getDamage()
+	{
+		return Mathf.Max (Random.Range (str - VARIATIONDAMAGE, str + VARIATIONDAMAGE), 1);
+	}
+
+	public int getMinDamage()
+	{
+		return this.str - VARIATIONDAMAGE;
+	}
+
+	public int getMaxDamage()
+	{
+		return this.str + VARIATIONDAMAGE;
 	}
 
 	public void damage(int damage)
@@ -80,17 +106,40 @@ public class GameUnit : MonoBehaviour {
 	public void addExp(int exp)
 	{
 		this.exp += exp;
+		if (this.getLevel() > this.level) {
+			this.level++;
+			this.competancePoint += 5;
+		}
 	}
+
 	public void boostStr()
 	{
-		this.str++;
+		if (this.competancePoint > 0) {
+			this.str++;
+			this.competancePoint--;
+		}
 	}
-	public void boostAge()
+	public void boostAgi()
 	{
-		this.str++;
+		if (this.competancePoint > 0) {
+			this.agi++;
+			this.competancePoint--;
+		}
 	}
 	public void boostIntel()
 	{
-		this.str++;
+		if (this.competancePoint > 0) {
+			this.intel++;
+			this.competancePoint--;
+			this.mana += MULTIPLICATEURINTELMANA;
+		}
+	}
+	public void boostConstitution()
+	{
+		if (this.competancePoint > 0) {
+			this.constitution++;
+			this.competancePoint--;
+			this.hp++;
+		}
 	}
 }
