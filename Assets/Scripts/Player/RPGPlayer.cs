@@ -12,7 +12,6 @@ public class RPGPlayer : GameUnit {
 		base.Start ();
 		Player = this.gameObject;
 		actif  = new int[4];
-		Debug.Log (actif.Length);
 		actif [0] = -1;
 		actif [1] = -1;
 		actif [2] = -1;
@@ -52,8 +51,6 @@ public class RPGPlayer : GameUnit {
 	public bool useSpell(int id)
 	{
 		Spell s = this.getSpell (id);
-		Debug.Log (s);
-		Debug.Log (this.mana);
 		if (s && this.mana >= s.mana) {
 			s.use ();
 			this.mana -= s.mana;

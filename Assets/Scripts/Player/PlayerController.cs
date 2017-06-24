@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour {
 
 	void setDefaultCameraPostion()
 	{
-		Camera.transform.localPosition = new Vector3 (66f, 64f, 189f);
+		Camera.transform.localPosition = new Vector3 (16f, 66f, 89f);
 		Camera.transform.localRotation = new Quaternion (0.5f, 0.0f, 0.01f, 0.9f);
 	}
 
@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour {
 		RaycastHit[] hits = Physics.RaycastAll (ray);
 		foreach (RaycastHit hitInfo in hits)
 		{
-			if (hitInfo.collider.gameObject.name == "Terrain")
+			if (hitInfo.collider.gameObject.name == "Cemetery")
 				return (hitInfo.point); 
 		}
 		return this.transform.position;

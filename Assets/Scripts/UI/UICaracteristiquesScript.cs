@@ -48,7 +48,6 @@ public class UICaracteristiquesScript : MonoBehaviour {
 	}
 
 	private void _activeInputs() {
-		Debug.Log (player.getcompetancePoint ());
 		if (player.getcompetancePoint () > 0) {
 			Strength.buttonUp.active = true;
 			Strength.buttonUp.gameObject.SetActive(true);
