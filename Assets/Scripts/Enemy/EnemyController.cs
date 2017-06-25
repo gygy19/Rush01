@@ -149,14 +149,10 @@ public class EnemyController : MonoBehaviour {
 
 	public void	DropItems()
 	{
-		foreach (GameObject item in this.dropItems) {
-			int dropped = Random.Range (1, 3);
-			if (dropped == 1) {
-				GameObject newDrop = GameObject.Instantiate (item);
-				newDrop.transform.position = this.transform.position;
-				Debug.Log ("The enemy dropped an item :" + newDrop.name);
-			}
-		}
+		int dropped = Random.Range (0, this.dropItems.Count);
+		GameObject newDrop = GameObject.Instantiate (this.dropItems[dropped]);
+		newDrop.transform.position = this.transform.position;
+		Debug.Log ("The enemy dropped an item :" + newDrop.name);
 	}
 
 	public void Die()
