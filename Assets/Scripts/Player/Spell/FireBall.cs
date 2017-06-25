@@ -10,11 +10,11 @@ public class FireBall : Spell {
 	public int variationDamage;
 	public int LevelUpBoost;
 
-	void Start () {
+	protected void Start () {
 		base.Start ();
 	}
 	
-	void Update () {
+	protected void Update () {
 		base.Update ();
 	}
 
@@ -22,7 +22,7 @@ public class FireBall : Spell {
 	{
 		Vector3 pos = RPGPlayer.Player.transform.position;
 		pos.y += 4;
-		GameObject fire = GameObject.Instantiate(ball, pos, Quaternion.LookRotation(Constants.GetMousePosition() - RPGPlayer.Player.transform.position));
+		GameObject.Instantiate(ball, pos, Quaternion.LookRotation(Constants.GetMousePosition() - RPGPlayer.Player.transform.position));
 		RPGPlayer.Player.GetComponent<PlayerController> ().StopMovement ();
 		RPGPlayer.Player.transform.rotation = Quaternion.LookRotation(Constants.GetMousePosition() - RPGPlayer.Player.transform.position);
 	}
