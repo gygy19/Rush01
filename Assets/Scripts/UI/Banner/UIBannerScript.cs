@@ -43,7 +43,7 @@ public class UIBannerScript : MonoBehaviour{
 					player.useSpell (button.spell);
 				}
 				if (button.item != null) {
-					button.item.take ();
+					button.item.use ();
 				}
 			}
 		}
