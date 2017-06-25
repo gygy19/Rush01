@@ -176,7 +176,7 @@ public class EnemyController : MonoBehaviour {
 		currentHit.GetComponent<Text>().text = " - " + valueDamage.ToString();
 		currentHit.GetComponent<Text> ().fontSize = 30;
 
-		currentHit.transform.SetParent(GameObject.Find ("Canvas 1").GetComponent<Canvas>().transform);
+		currentHit.transform.SetParent(GameObject.Find ("Canvas").GetComponent<Canvas>().transform);
 		currentHit.transform.position = new Vector3 (83.6f, 174.5f, 0f);
 	}
 

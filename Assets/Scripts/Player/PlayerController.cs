@@ -14,7 +14,6 @@ public class PlayerController : MonoBehaviour {
 	public bool				pauseGame;
 	public bool				isDying;
 	public float			dieTime;
-	public GameObject		HitText;
 	void Start () {
 		Camera = GameObject.Find ("Main Camera").GetComponent<Camera> ();
 		Agent = GetComponent<NavMeshAgent> ();
