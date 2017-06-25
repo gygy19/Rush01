@@ -17,6 +17,7 @@ public abstract class AbstractCaseButton : MonoBehaviour, IPointerClickHandler, 
 	public Spell spell = null;
 
 	private bool ondrag = false;
+	private Vector3 basePosition;
 
 	// Use this for initialization
 	public void Start () {
@@ -25,15 +26,14 @@ public abstract class AbstractCaseButton : MonoBehaviour, IPointerClickHandler, 
 		if (spell != null)
 			addSpell (spell);
 		this.gameObject.SetActive (active);
+		print ("MY POS : " + basePosition.x + ", " + basePosition.y + ", " + basePosition.z + ""); 
 	}
 	
 	// Update is called once per frame
 	public void Update () {
 		if (active != this.gameObject.active)
 			this.gameObject.SetActive (active);
-		if (isSelected == true) {
-
-		}
+		updateIcon ();
 	}
 
 	public Item getItem () {
@@ -97,62 +97,67 @@ public abstract class AbstractCaseButton : MonoBehaviour, IPointerClickHandler, 
 	public void OnPointerDown(PointerEventData eventData)
 	{
 		Debug.Log("Case (" + this.getCaseId() + ") StartDrag.");
-		this.cleanIcon ();
+		basePosition = new Vector3 (this.transform.position.x, this.transform.position.y, this.transform.position.z);
+		//this.transform.position = new Vector3 (this.transform.position.x, this.transform.position.y,-1000);
+		PointerScript.instance.followCursor (this.gameObject);
 	}
 
 	//Do this when the mouse click on this selectable UI object is released.
 	public void OnPointerUp(PointerEventData eventData)
 	{
+		Item item = this.item;
+		Spell spell = this.spell;
+
+		PointerScript.instance.unfollowCursor (this.gameObject);
+		this.transform.position = new Vector3 (basePosition.x, basePosition.y, this.transform.position.z);
+
 		if (PointerScript.instance.curButton () != null && PointerScript.instance.curButton () != this) {
 			AbstractCaseButton newCase = PointerScript.instance.curButton ();
 
-			if (newCase.getItem () != null || newCase.getSpell () != null) {
-				PointerScript.instance.setCurButton (null);
-				return;
-			}
+			this.removeItem ();
+			this.removeSpell ();
 			int button_type = -1;
 
 			if ((newCase is ItemCaseButtonScript)) {
 				button_type = 0;
 			} if ((newCase is SpellCaseButtonScript)) {
-				button_type = 1;	
+				button_type = 1;
 			}
-
+			if (newCase.getItem() != null) {
+				this.addItem (newCase.item);
+			}
+			if (newCase.getSpell() != null) {
+				this.addSpell (newCase.spell);
+			}
 			switch (button_type) {
 			case 0:
-				if (this.item != null) {
-					newCase.addItem (this.item);
-					this.removeItem ();
+				if (item != null) {
+					newCase.addItem (item);
 				}
 				break;
 			case 1:
-				if (this.spell != null) {
-					newCase.addSpell (this.spell);
-					this.removeSpell ();
+				if (spell != null) {
+					newCase.addSpell (spell);
 				}
 				break;
 			default:
-				if (this.item != null) {
-					newCase.addItem (this.item);
-					this.removeItem ();
+				if (item != null) {
+					newCase.addItem (item);
 				}
-				else if (this.spell != null) {
-					newCase.addSpell (this.spell);
-					this.removeSpell ();
+				else if (spell != null) {
+					newCase.addSpell (spell);
 				}
 				break;
 			}
 			Debug.Log("Case (" + this.getCaseId() + ") Dropped to Case (" + newCase.name + ")");
-			PointerScript.instance.setCurButton (null);
 		}
-		this.updateIcon ();
+		PointerScript.instance.setCurButton (null);
 	}
 
 	//Do this when the cursor enters the rect area of this selectable UI object.
 	public void OnPointerEnter(PointerEventData eventData)
 	{
 		PointerScript.instance.setCurButton (this);
-		Debug.Log("The cursor entered the selectable UI element." + this.name);
 	}
 
 	//Do this when the cursor exits the rect area of this selectable UI object.
@@ -161,6 +166,5 @@ public abstract class AbstractCaseButton : MonoBehaviour, IPointerClickHandler, 
 		if (PointerScript.instance.curButton () == this) {
 			PointerScript.instance.setCurButton (null);
 		}
-		Debug.Log("The cursor exited the selectable UI element.");
 	}
 }
