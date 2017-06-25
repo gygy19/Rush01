@@ -48,6 +48,21 @@ public class PlayerController : MonoBehaviour {
 		transform.rotation = Quaternion.LookRotation(newDir);
 	}
 
+	void meleeAttack()
+	{
+		Collider[] hitColliders = Physics.OverlapSphere(this.transform.position, 10f);
+		int i = 0;
+		while (i < hitColliders.Length)
+		{
+			if (hitColliders [i].gameObject.tag == Constants.ENEMY_TAG) {
+				EnemyController controller = hitColliders [i].gameObject.GetComponent<EnemyController> ();
+				if (controller.isDying == false)
+					controller.takeDamage(RPGPlayer.getDamage());
+			}
+			i++;
+		}
+	}
+
 	void catchMovement()
 	{
 		if (Input.GetMouseButton (MouseClickEnum.RIGHT_CLICK)) {
@@ -58,8 +73,11 @@ public class PlayerController : MonoBehaviour {
 				GetComponent<Animator> ().SetFloat (MovementEnum.MOVEMENT_FORWARD, 1);
 				isMooving = true;
 			}
-		} else if (Input.GetKeyDown (KeyCode.Q)) {
+		} else if (Input.GetKey (KeyCode.Q)) {
+			meleeAttack ();
 			GetComponent<Animator> ().SetBool (MovementEnum.MOVEMENT_ATTACK, true);
+		} else {
+			GetComponent<Animator> ().SetBool (MovementEnum.MOVEMENT_ATTACK, false);
 		}
 	}
 
