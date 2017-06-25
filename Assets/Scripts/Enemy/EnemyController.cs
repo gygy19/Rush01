@@ -14,6 +14,7 @@ public class EnemyController : MonoBehaviour {
 	public	RPGEnemy 			RPGEnemy;
 	public	float				attackTime;
 	public	int					experience;
+	public List<GameObject> 	dropItems;
 
 
 	public bool 				isDying;
@@ -110,6 +111,7 @@ public class EnemyController : MonoBehaviour {
 		if (isDying) {
 			float diff = Time.fixedTime - this.dieTime;
 			if (diff > 3f) {
+				DropItems ();
 				GameObject.DestroyObject (this.gameObject);
 			}
 		}
@@ -141,6 +143,18 @@ public class EnemyController : MonoBehaviour {
 	{
 		if (other.name == "Player" && this.isFollowing)
 			UnFollowPlayer ();
+	}
+
+	public void	DropItems()
+	{
+		foreach (GameObject item in this.dropItems) {
+			int dropped = Random.Range (1, 3);
+			if (dropped == 1) {
+				GameObject newDrop = GameObject.Instantiate (item);
+				newDrop.transform.position = this.transform.position;
+				Debug.Log ("The enemy dropped an item :" + newDrop.name);
+			}
+		}
 	}
 
 	public void Die()
