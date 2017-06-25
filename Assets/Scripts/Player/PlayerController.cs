@@ -38,9 +38,19 @@ public class PlayerController : MonoBehaviour {
 		Camera.transform.localRotation = new Quaternion (0.5f, 0.0f, 0.01f, 0.9f);
 	}
 
+	void rotateToMouse()
+	{
+		Vector3 targetDir = Constants.GetMousePosition () - transform.position;
+		float step = 100f * Time.deltaTime;
+		Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0F);
+		Debug.DrawRay(transform.position, newDir, Color.red);
+		transform.rotation = Quaternion.LookRotation(newDir);
+	}
+
 	void catchMovement()
 	{
 		if (Input.GetMouseButtonDown(MouseClickEnum.RIGHT_CLICK)) {
+			rotateToMouse ();
 			Vector3 position = Constants.GetMousePosition ();
 			if (position.x != 0 && position.y != 0 && position.z != 0) {
 				Agent.SetDestination (position);

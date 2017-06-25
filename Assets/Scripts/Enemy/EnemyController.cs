@@ -76,10 +76,10 @@ public class EnemyController : MonoBehaviour {
 	void isAroundPlayer()
 	{
 		if (this.Agent.remainingDistance <= 4f) {
-			attackPlayer ();
-		}
-		else
+				attackPlayer ();
+		} else {
 			GetComponent<Animator> ().SetBool (MovementEnum.MOVEMENT_ATTACK, false);
+		}
 	}
 
 	void OnPausedGame()
