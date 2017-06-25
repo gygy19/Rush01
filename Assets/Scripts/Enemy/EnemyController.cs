@@ -20,6 +20,21 @@ public class EnemyController : MonoBehaviour {
 		this.Agent = GetComponent<NavMeshAgent> ();
 		this.RPGEnemy = GetComponent<RPGEnemy> ();
 		this.isFollowing = false;
+
+		IEnumerator routine = initializeData (1.0f);
+		this.StartCoroutine (routine);
+	}
+
+	public IEnumerator initializeData(float waitTime)
+	{
+		while (true)
+		{
+			if (playerController.RPGPlayer != null) {
+				RPGEnemy.setLevel (playerController.RPGPlayer.getLevel());
+				break;
+			}
+			yield return new WaitForSeconds(waitTime);
+		}
 	}
 
 	void FollowPlayer()
@@ -51,11 +66,11 @@ public class EnemyController : MonoBehaviour {
 	{
 		float diff = Time.fixedTime - attackTime;
 		if (diff > attackSpeed) {
-			rotateToPlayer ();
 			GetComponent<Animator> ().SetBool (MovementEnum.MOVEMENT_ATTACK, true);
 			RPGEnemy.Attack (playerController);
 			attackTime = Time.fixedTime;
 		}
+		rotateToPlayer ();
 	}
 
 	void isAroundPlayer()
@@ -67,12 +82,27 @@ public class EnemyController : MonoBehaviour {
 			GetComponent<Animator> ().SetBool (MovementEnum.MOVEMENT_ATTACK, false);
 	}
 
+	void OnPausedGame()
+	{
+		GetComponent<Animator> ().SetBool (MovementEnum.MOVEMENT_ATTACK, false);
+		GetComponent<Animator> ().SetFloat (MovementEnum.MOVEMENT_FORWARD, 0);
+	}
+
 	void Update ()
 	{
+		if (playerController.pauseGame) {
+			OnPausedGame ();
+			return;
+		}
+			
 		if (isFollowing) {
-			isAroundPlayer ();
-			if (this.playerController.transform.position.x != followingPosition.x || this.playerController.transform.position.y != followingPosition.y || this.playerController.transform.position.z != followingPosition.z) {
-				FollowPlayer ();
+			if (playerController.RPGPlayer.getHp () > 0) {
+				isAroundPlayer ();
+				if (this.playerController.transform.position.x != followingPosition.x || this.playerController.transform.position.y != followingPosition.y || this.playerController.transform.position.z != followingPosition.z) {
+					FollowPlayer ();
+				}
+			} else {
+				GetComponent<Animator> ().SetBool (MovementEnum.MOVEMENT_ATTACK, false);
 			}
 		}
 	}
