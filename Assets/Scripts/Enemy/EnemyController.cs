@@ -161,6 +161,7 @@ public class EnemyController : MonoBehaviour {
 
 	public void Die()
 	{
+		this.UnFollowPlayer ();
 		playerController.RPGPlayer.addExp (this.experience);
 		GetComponent<Animator> ().SetBool (MovementEnum.MOVEMENT_DEAD, true);
 		this.isDying = true;
@@ -175,8 +176,7 @@ public class EnemyController : MonoBehaviour {
 		currentHit.GetComponent<Text>().text = " - " + valueDamage.ToString();
 		currentHit.GetComponent<Text> ().fontSize = 30;
 
-		Canvas Canvas1 = GameObject.Find ("Canvas 1").GetComponent<Canvas>();
-		currentHit.transform.parent = Canvas1.transform;
+		currentHit.transform.SetParent(GameObject.Find ("Canvas 1").GetComponent<Canvas>().transform);
 		currentHit.transform.position = new Vector3 (83.6f, 174.5f, 0f);
 	}
 
