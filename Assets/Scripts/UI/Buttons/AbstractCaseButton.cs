@@ -28,7 +28,6 @@ public abstract class AbstractCaseButton : MonoBehaviour, IPointerClickHandler, 
 		if (spell != null)
 			addSpell (spell);
 		this.gameObject.SetActive (active);
-		print ("MY POS : " + basePosition.x + ", " + basePosition.y + ", " + basePosition.z + ""); 
 	}
 	
 	// Update is called once per frame
@@ -100,7 +99,6 @@ public abstract class AbstractCaseButton : MonoBehaviour, IPointerClickHandler, 
 	{
 		if (blocked == true)
 			return;
-		Debug.Log("Case (" + this.getCaseId() + ") StartDrag.");
 		basePosition = new Vector3 (this.transform.position.x, this.transform.position.y, this.transform.position.z);
 		PointerScript.instance.setCurButton (this);
 		//NON FONCTIONNEL SUR CETTE VERSION
@@ -125,7 +123,7 @@ public abstract class AbstractCaseButton : MonoBehaviour, IPointerClickHandler, 
 				button_type = 0;
 			if ((newCase is SpellCaseButtonScript))
 				button_type = 1;
-			if (button_type == 0 && (this is ItemCaseButtonScript) || button_type == 1 && (this is SpellCaseButtonScript) || button_type == -1) {
+			if (button_type == 0 && this.item != null || button_type == 1 && this.spell != null || button_type == -1) {
 				if (duplicatable == false) {
 					this.removeItem ();
 					this.removeSpell ();
@@ -150,7 +148,6 @@ public abstract class AbstractCaseButton : MonoBehaviour, IPointerClickHandler, 
 						newCase.addSpell (tmpspell);
 					break;
 				}
-				Debug.Log ("Case (" + this.getCaseId () + ") Dropped to Case (" + newCase.name + ")");
 			}
 		} else if (this.spell != null && this.duplicatable == false && PointerScript.instance.curButton () == null) {
 			this.removeSpell ();
