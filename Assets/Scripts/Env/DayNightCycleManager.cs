@@ -64,18 +64,18 @@ public class DayNightCycleManager : MonoBehaviour {
 		sunLight.transform.Rotate (new Vector3 (0, speed * Time.deltaTime, 0));
 		moonLight.transform.Rotate (new Vector3 (0, speed * Time.deltaTime, 0));
 
-		if (Quaternion.Angle (sunLight.transform.rotation, dawnRotation) < 10) {
-			if (_prevAngle > Quaternion.Angle (sunLight.transform.rotation, dawnRotation))
-				sunLight.color = Color.Lerp (dawnColor, nightColor, Mathf.Abs (Quaternion.Angle (sunLight.transform.rotation, dawnRotation)) / 10);
+		if (Quaternion.Angle (sunLight.transform.localRotation, dawnRotation) < 10) {
+			if (_prevAngle > Quaternion.Angle (sunLight.transform.localRotation, dawnRotation))
+				sunLight.color = Color.Lerp (dawnColor, nightColor, Mathf.Abs (Quaternion.Angle (sunLight.transform.localRotation, dawnRotation)) / 10);
 			else
-				sunLight.color = Color.Lerp (dawnColor, normalColor, Mathf.Abs (Quaternion.Angle (sunLight.transform.rotation, dawnRotation)) / 10);
-			_prevAngle = Quaternion.Angle (sunLight.transform.rotation, dawnRotation);
-		} else if (Quaternion.Angle (sunLight.transform.rotation, twilightRotation) < 10) {
-			if (_prevAngle < Quaternion.Angle (sunLight.transform.rotation, twilightRotation))
-				sunLight.color = Color.Lerp (twilightColor, nightColor, Mathf.Abs (Quaternion.Angle (sunLight.transform.rotation, twilightRotation)) / 10);
+				sunLight.color = Color.Lerp (dawnColor, normalColor, Mathf.Abs (Quaternion.Angle (sunLight.transform.localRotation, dawnRotation)) / 10);
+			_prevAngle = Quaternion.Angle (sunLight.transform.localRotation, dawnRotation);
+		} else if (Quaternion.Angle (sunLight.transform.localRotation, twilightRotation) < 10) {
+			if (_prevAngle < Quaternion.Angle (sunLight.transform.localRotation, twilightRotation))
+				sunLight.color = Color.Lerp (twilightColor, nightColor, Mathf.Abs (Quaternion.Angle (sunLight.transform.localRotation, twilightRotation)) / 10);
 			else
-				sunLight.color = Color.Lerp (twilightColor, normalColor, Mathf.Abs (Quaternion.Angle (sunLight.transform.rotation, twilightRotation)) / 10);
-			_prevAngle = Quaternion.Angle (sunLight.transform.rotation, twilightRotation);
+				sunLight.color = Color.Lerp (twilightColor, normalColor, Mathf.Abs (Quaternion.Angle (sunLight.transform.localRotation, twilightRotation)) / 10);
+			_prevAngle = Quaternion.Angle (sunLight.transform.localRotation, twilightRotation);
 		} else {
 			_prevAngle = 10;
 		}
