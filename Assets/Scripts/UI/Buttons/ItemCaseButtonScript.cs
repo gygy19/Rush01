@@ -7,16 +7,6 @@ using System.Linq;
 using UnityEngine.UI;
 
 public class ItemCaseButtonScript : AbstractCaseButton {
-	
-	public bool isSelected = false;
-	public bool active = true;
-	public bool onDrop = false;
-	public Sprite blankSprite;
-
-	public Item item = null;
-	//ITEM
-
-	private bool ondrag = false;
 
 	// Use this for initialization
 	void Start () {
@@ -38,11 +28,11 @@ public class ItemCaseButtonScript : AbstractCaseButton {
 
 	public override void addItem(Item item) {
 		this.item = item;
-		this.GetComponent<Image> ().sprite = item.icon;
+		this.updateIcon ();
 	}
 
 	public override void removeItem() {
 		this.item = null;
-		this.GetComponent<Image> ().sprite = blankSprite;
+		this.cleanIcon ();
 	}
 }
