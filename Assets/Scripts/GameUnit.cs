@@ -114,11 +114,14 @@ public class GameUnit : MonoBehaviour {
 
 	public bool addHp(int hp)
 	{
+		Debug.Log (hp);
+		Debug.Log (this.hp >= getMaxHp ());
 		if (this.hp >= getMaxHp ())
 			return false;
 		if (this.hp + hp > getMaxHp ()) {
-			this.hp += getMaxHp ();
-		}
+			this.hp = getMaxHp ();
+		} else
+			this.hp += hp;
 		return true;
 	}
 
