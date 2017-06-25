@@ -42,7 +42,7 @@ public class UISpellScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
 	public void addSpell(GameObject spell) {
 		this.spell = spell;
-		this.name.text = spell.name;
+		this.name.text = spell.GetComponent<Spell>().name;
 		//TODO
 		//this.lblCountLevel.text
 		spellCase.addSpell (spell.GetComponent<Spell>());
