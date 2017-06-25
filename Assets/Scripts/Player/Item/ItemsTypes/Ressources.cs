@@ -14,7 +14,7 @@ public class Ressources : Item {
 		base.Update ();
 	}
 
-	public override void use() {
-	
+	public override bool use() {
+		return false;
 	}
 }

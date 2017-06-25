@@ -112,9 +112,14 @@ public class GameUnit : MonoBehaviour {
 		this.hp -= damage;
 	}
 
-	public void addHp(int hp)
+	public bool addHp(int hp)
 	{
-		this.hp += hp;
+		if (this.hp >= getMaxHp ())
+			return false;
+		if (this.hp + hp > getMaxHp ()) {
+			this.hp += getMaxHp ();
+		}
+		return true;
 	}
 
 	public void addExp(int exp)

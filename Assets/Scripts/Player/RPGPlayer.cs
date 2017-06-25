@@ -8,6 +8,7 @@ public class RPGPlayer : GameUnit {
 	public List<Spell> spells = new List<Spell> ();
 	public static GameObject Player;
 	private int spellPoints = 0;
+	private List<Item> inventory = new List<Item> ();
 
 	void Start () {
 		base.Start ();
@@ -18,9 +19,7 @@ public class RPGPlayer : GameUnit {
 		actif [2] = -1;
 		actif [3] = -1;
 
-
 		actif [0] = 0;
-
 	}
 	
 	void Update () {
@@ -78,5 +77,20 @@ public class RPGPlayer : GameUnit {
 			return true;
 		}
 		return false;
+	}
+
+	public List<Item> getInventory()
+	{
+		return inventory;
+	}
+
+	public void addItemToInventory(Item it)
+	{
+		this.inventory.Add (it);
+	}
+
+	public void removeItemToInventory(int id)
+	{
+		this.inventory.RemoveAt (id);
 	}
 }

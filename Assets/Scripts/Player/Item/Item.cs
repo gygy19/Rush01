@@ -19,5 +19,6 @@ public abstract class Item : MonoBehaviour {
 
 	}
 
-	abstract public void use ();
+	abstract public bool use ();
+
 }
