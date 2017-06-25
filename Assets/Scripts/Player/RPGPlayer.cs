@@ -82,14 +82,26 @@ public class RPGPlayer : GameUnit {
 		return this.spellPoints;
 	}
 
-	public bool useSpellPoint(int idSpell)
+	public bool useSpellPoint(Spell s)
 	{
 		if (this.spellPoints > 0) {
 			this.spellPoints--;
-			this.spells [idSpell].up ();
+			this.spells[getIdSpell(s)].up ();
 			return true;
 		}
 		return false;
+	}
+
+	public int getIdSpell(Spell s)
+	{
+		int i = 0;
+		foreach (Spell spell in this.spells)
+		{
+			if (s.Equals(spell))
+				return i;
+			i++;
+		}
+		return -1;
 	}
 
 	public List<Item> getInventory()
