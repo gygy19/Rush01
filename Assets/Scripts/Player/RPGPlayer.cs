@@ -5,7 +5,7 @@ using UnityEngine;
 public class RPGPlayer : GameUnit {
 
 	public int[] actif;
-	public List<Spell> spells = new List<Spell> ();
+	public List<GameObject> spells = new List<GameObject> ();
 	public static GameObject Player;
 	private int spellPoints = 0;
 	private List<Item> inventory = new List<Item> ();
@@ -64,7 +64,7 @@ public class RPGPlayer : GameUnit {
 	public Spell getSpell(int id)
 	{
 		if (id < spells.Count)
-			return spells[id];
+			return spells[id].GetComponent<Spell>();
 		return null;
 	}
 
@@ -81,8 +81,8 @@ public class RPGPlayer : GameUnit {
 	public bool useSpell(Spell s)
 	{
 		if (s && this.mana >= s.mana) {
-			s.use ();
-			this.mana -= s.mana;
+			if (s.use ())
+				this.mana -= s.mana;
 		}
 		return false;
 	}
@@ -92,20 +92,20 @@ public class RPGPlayer : GameUnit {
 		return this.spellPoints;
 	}
 
-	public bool useSpellPoint(Spell s)
+	public bool useSpellPoint(GameObject s)
 	{
 		if (this.spellPoints > 0) {
 			this.spellPoints--;
-			this.spells[getIdSpell(s)].up ();
+			this.spells[getIdSpell(s)].GetComponent<Spell>().up ();
 			return true;
 		}
 		return false;
 	}
 
-	public int getIdSpell(Spell s)
+	public int getIdSpell(GameObject s)
 	{
 		int i = 0;
-		foreach (Spell spell in this.spells)
+		foreach (GameObject spell in this.spells)
 		{
 			if (s.Equals(spell))
 				return i;

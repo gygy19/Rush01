@@ -18,7 +18,7 @@ public class FireBall : Spell {
 		base.Update ();
 	}
 
-	public override void use()
+	public override bool use()
 	{
 		Vector3 pos = RPGPlayer.Player.transform.position;
 		pos.y += 4;
@@ -26,11 +26,12 @@ public class FireBall : Spell {
 		GameObject.Instantiate(ball, pos, Quaternion.LookRotation(Constants.GetMousePosition() - RPGPlayer.Player.transform.position));
 		RPGPlayer.Player.GetComponent<PlayerController> ().StopMovement ();
 		RPGPlayer.Player.transform.rotation = Quaternion.LookRotation(Constants.GetMousePosition() - RPGPlayer.Player.transform.position);
+		return true;
 	}
 
 	public override string getValue()
 	{
-		return "[" + (damage - variationDamage) + " - " + (damage + variationDamage) + "]";
+		return "[" + (damage - variationDamage + LevelUpBoost * this.getLevel()) + " - " + (damage + variationDamage + LevelUpBoost * this.getLevel()) + "]";
 	}
 
 	public override string getUpgrade()

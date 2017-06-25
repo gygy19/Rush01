@@ -29,7 +29,7 @@ public abstract class Spell : MonoBehaviour {
 		return this.level;
 	}
 
-	abstract public void use ();
+	abstract public bool use ();
 	abstract public string getUpgrade ();
 	abstract public string getValue ();
 }

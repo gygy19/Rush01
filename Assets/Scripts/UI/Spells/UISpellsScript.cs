@@ -22,15 +22,15 @@ public class UISpellsScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		this.player = GameObject.Find ("Player").GetComponent<RPGPlayer>();
-		foreach (Spell spell in player.spells) {
-			if (player.getLevel () >= spell.startLevel)
+		foreach (GameObject spell in player.spells) {
+			if (player.getLevel () >= spell.GetComponent<Spell> ().startLevel)
 				addSpell (spell);
 		}
 		foreach (GameObject o in contentObjects) {
 			o.SetActive (false);
 		}
 		if (player.spells.Count > 0) {
-			selectSpell (player.spells[0]);
+			selectSpell (player.spells[0].GetComponent<Spell>());
 		}
 	}
 	
@@ -41,15 +41,17 @@ public class UISpellsScript : MonoBehaviour {
 			exitButton.isSelected = false;
 			setVisible (false);
 		}
-		foreach (Spell spell in player.spells) {
+		if (this.visible == false)
+			return;
+		foreach (GameObject spell in player.spells) {
 			bool contain = false;
 			foreach (UISpellScript spellSlot in spellsSlots) {
-				if (spellSlot.spell == spell) {
+				if (spellSlot.spell.Equals(spell)) {
 					contain = true;
 					break;
 				}
 			}
-			if (contain == false && player.getLevel () >= spell.startLevel) {
+			if (contain == false && player.getLevel () >= spell.GetComponent<Spell>().startLevel) {
 				addSpell (spell);
 			}
 		}
@@ -84,7 +86,7 @@ public class UISpellsScript : MonoBehaviour {
 		}
 	}
 
-	public void addSpell(Spell spell) {
+	public void addSpell(GameObject spell) {
 		foreach (UISpellScript spellSlot in spellsSlots) {
 			if (spellSlot.spell == null) {
 				spellSlot.addSpell (spell);

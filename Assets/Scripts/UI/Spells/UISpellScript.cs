@@ -15,7 +15,7 @@ public class UISpellScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 	public bool active = false;
 	public UISpellsScript spellPanel;
 
-	public Spell spell;
+	public GameObject spell;
 
 	private RPGPlayer player;
 
@@ -31,7 +31,7 @@ public class UISpellScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 			this.gameObject.SetActive (active);
 
 		if (spell != null) {
-			lblCountLevel.text = "" + spell.getLevel ();
+			lblCountLevel.text = "" + spell.GetComponent<Spell>().getLevel ();
 		}
 
 		if (this.buttonLevelup.isSelected) {
@@ -40,12 +40,12 @@ public class UISpellScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 		}
 	}
 
-	public void addSpell(Spell spell) {
+	public void addSpell(GameObject spell) {
 		this.spell = spell;
-		this.name.text = spell.name;
+		this.name.text = spell.GetComponent<Spell>().name;
 		//TODO
 		//this.lblCountLevel.text
-		spellCase.addSpell (spell);
+		spellCase.addSpell (spell.GetComponent<Spell>());
 		this.active = true;
 		this.gameObject.SetActive (true);
 	}
@@ -61,7 +61,7 @@ public class UISpellScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 	//Do this when the cursor enters the rect area of this selectable UI object.
 	public void OnPointerEnter(PointerEventData eventData)
 	{
-		spellPanel.selectSpell (this.spell);
+		spellPanel.selectSpell (this.spell.GetComponent<Spell>());
 	}
 
 	//Do this when the cursor exits the rect area of this selectable UI object.

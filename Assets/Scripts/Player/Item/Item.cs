@@ -13,6 +13,7 @@ public abstract class Item : MonoBehaviour {
 	protected void Start () {
 		skin = GameObject.Instantiate (skin, transform.position, Quaternion.identity);
 	//	skin.transform.localPosition = Vector3.zero;
+		skin.tag = Constants.ITEM_TAG;
 		skin.transform.parent = this.gameObject.transform;
 	}
 
@@ -24,6 +25,7 @@ public abstract class Item : MonoBehaviour {
 
 	public void take()
 	{
+		this.transform.position = Vector3.zero;
 		skin.SetActive (false);
 	}
 }
