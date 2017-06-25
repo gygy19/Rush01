@@ -13,13 +13,19 @@ public class EnemyController : MonoBehaviour {
 	public	float				attackSpeed;
 	public	RPGEnemy 			RPGEnemy;
 	public	float				attackTime;
+	public	int					experience;
+	public List<GameObject> 	dropItems;
 
+
+	public bool 				isDying;
+	public float				dieTime;
 	void Start ()
 	{
 		this.playerController = GameObject.Find ("Player").GetComponent<PlayerController> ();
 		this.Agent = GetComponent<NavMeshAgent> ();
 		this.RPGEnemy = GetComponent<RPGEnemy> ();
 		this.isFollowing = false;
+		this.isDying = false;
 
 		IEnumerator routine = initializeData (1.0f);
 		this.StartCoroutine (routine);
@@ -86,6 +92,8 @@ public class EnemyController : MonoBehaviour {
 	{
 		GetComponent<Animator> ().SetBool (MovementEnum.MOVEMENT_ATTACK, false);
 		GetComponent<Animator> ().SetFloat (MovementEnum.MOVEMENT_FORWARD, 0);
+		Agent.velocity = Vector3.zero;
+		Agent.ResetPath();
 	}
 
 	void setAnimatorSpeed(int speed)
@@ -100,8 +108,14 @@ public class EnemyController : MonoBehaviour {
 			OnPausedGame ();
 			return;
 		}
-			
-		if (isFollowing) {
+		if (isDying) {
+			float diff = Time.fixedTime - this.dieTime;
+			if (diff > 3f) {
+				DropItems ();
+				GameObject.DestroyObject (this.gameObject);
+			}
+		}
+		else if (isFollowing) {
 			setAnimatorSpeed (1);
 			if (playerController.RPGPlayer.getHp () > 0) {
 				isAroundPlayer ();
@@ -129,5 +143,34 @@ public class EnemyController : MonoBehaviour {
 	{
 		if (other.name == "Player" && this.isFollowing)
 			UnFollowPlayer ();
+	}
+
+	public void	DropItems()
+	{
+		foreach (GameObject item in this.dropItems) {
+			int dropped = Random.Range (1, 3);
+			if (dropped == 1) {
+				GameObject newDrop = GameObject.Instantiate (item);
+				newDrop.transform.position = this.transform.position;
+				Debug.Log ("The enemy dropped an item :" + newDrop.name);
+			}
+		}
+	}
+
+	public void Die()
+	{
+		playerController.RPGPlayer.addExp (this.experience);
+		GetComponent<Animator> ().SetBool (MovementEnum.MOVEMENT_DEAD, true);
+		this.isDying = true;
+		this.dieTime = Time.fixedTime;
+		Debug.Log ("An enemy is dying ! Well played you won " + this.experience + " points of experience !");
+	}
+
+	public void takeDamage(int value)
+	{
+		this.RPGEnemy.damage (value);
+		if (this.RPGEnemy.getHp () <= 0) {
+			this.Die ();	
+		}
 	}
 }

@@ -8,6 +8,8 @@ using UnityEngine.UI;
 
 public abstract class AbstractCaseButton : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler {
 
+	public bool blocked = false;
+	public bool duplicatable = false;
 	public bool isSelected = false;
 	public bool active = true;
 	public bool onDrop = false;
@@ -96,73 +98,83 @@ public abstract class AbstractCaseButton : MonoBehaviour, IPointerClickHandler, 
 	//Do this when the mouse is clicked over the selectable object this script is attached to.
 	public void OnPointerDown(PointerEventData eventData)
 	{
+		if (blocked == true)
+			return;
 		Debug.Log("Case (" + this.getCaseId() + ") StartDrag.");
 		basePosition = new Vector3 (this.transform.position.x, this.transform.position.y, this.transform.position.z);
-		//this.transform.position = new Vector3 (this.transform.position.x, this.transform.position.y,-1000);
-		PointerScript.instance.followCursor (this.gameObject);
+		PointerScript.instance.setCurButton (this);
+		//NON FONCTIONNEL SUR CETTE VERSION
+		//PointerScript.instance.followCursor (this.gameObject);
+		this.ondrag = true;
 	}
 
 	//Do this when the mouse click on this selectable UI object is released.
 	public void OnPointerUp(PointerEventData eventData)
 	{
-		Item item = this.item;
-		Spell spell = this.spell;
-
-		PointerScript.instance.unfollowCursor (this.gameObject);
-		this.transform.position = new Vector3 (basePosition.x, basePosition.y, this.transform.position.z);
+		if (this.blocked)
+			return ;
+		Item tmpitem = this.item;
+		Spell tmpspell = this.spell;
 
 		if (PointerScript.instance.curButton () != null && PointerScript.instance.curButton () != this) {
 			AbstractCaseButton newCase = PointerScript.instance.curButton ();
 
-			this.removeItem ();
-			this.removeSpell ();
 			int button_type = -1;
 
-			if ((newCase is ItemCaseButtonScript)) {
+			if ((newCase is ItemCaseButtonScript))
 				button_type = 0;
-			} if ((newCase is SpellCaseButtonScript)) {
+			if ((newCase is SpellCaseButtonScript))
 				button_type = 1;
-			}
-			if (newCase.getItem() != null) {
-				this.addItem (newCase.item);
-			}
-			if (newCase.getSpell() != null) {
-				this.addSpell (newCase.spell);
-			}
-			switch (button_type) {
-			case 0:
-				if (item != null) {
-					newCase.addItem (item);
+			if (button_type == 0 && (this is ItemCaseButtonScript) || button_type == 1 && (this is SpellCaseButtonScript) || button_type == -1) {
+				if (duplicatable == false) {
+					this.removeItem ();
+					this.removeSpell ();
 				}
-				break;
-			case 1:
-				if (spell != null) {
-					newCase.addSpell (spell);
+				if (newCase.getItem () != null)
+					this.addItem (newCase.item);
+				if (newCase.getSpell () != null)
+					this.addSpell (newCase.spell);
+				switch (button_type) {
+				case 0:
+					if (tmpitem != null)
+						newCase.addItem (tmpitem);
+					break;
+				case 1:
+					if (tmpspell != null)
+						newCase.addSpell (tmpspell);
+					break;
+				default:
+					if (tmpitem != null)
+						newCase.addItem (tmpitem);
+					else if (tmpspell != null)
+						newCase.addSpell (tmpspell);
+					break;
 				}
-				break;
-			default:
-				if (item != null) {
-					newCase.addItem (item);
-				}
-				else if (spell != null) {
-					newCase.addSpell (spell);
-				}
-				break;
+				Debug.Log ("Case (" + this.getCaseId () + ") Dropped to Case (" + newCase.name + ")");
 			}
-			Debug.Log("Case (" + this.getCaseId() + ") Dropped to Case (" + newCase.name + ")");
+		} else if (this.spell != null && this.duplicatable == false && PointerScript.instance.curButton () == null) {
+			this.removeSpell ();
 		}
 		PointerScript.instance.setCurButton (null);
+		//NON FONCTIONNEL SUR CETTE VERSION
+		//PointerScript.instance.unfollowCursor (this.gameObject);
+		this.transform.position = new Vector3 (basePosition.x, basePosition.y, this.transform.position.z);
+		this.ondrag = false;
 	}
 
 	//Do this when the cursor enters the rect area of this selectable UI object.
 	public void OnPointerEnter(PointerEventData eventData)
 	{
+		if (this.ondrag)
+			return ;
 		PointerScript.instance.setCurButton (this);
 	}
 
 	//Do this when the cursor exits the rect area of this selectable UI object.
 	public void OnPointerExit(PointerEventData eventData)
 	{
+		if (this.ondrag)
+			return ;
 		if (PointerScript.instance.curButton () == this) {
 			PointerScript.instance.setCurButton (null);
 		}

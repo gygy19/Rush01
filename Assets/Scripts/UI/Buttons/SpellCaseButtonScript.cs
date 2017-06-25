@@ -19,6 +19,11 @@ public class SpellCaseButtonScript : AbstractCaseButton {
 	}
 
 	public override void addSpell(Spell spell) {
+		if (spell == null) {
+		
+			removeSpell ();
+			return;
+		}
 		this.spell = spell;
 		this.GetComponent<Image> ().sprite = spell.icon;
 	}

@@ -6,11 +6,11 @@ using UnityEngine.EventSystems;
 using System.Linq;
 using UnityEngine.UI;
 
-public class ItemCaseButtonScript : AbstractCaseButton {
+public class AllTypeCaseButton : AbstractCaseButton {
 
 	// Use this for initialization
 	void Start () {
-		base.Update ();
+		base.Start();
 	}
 
 	// Update is called once per frame
@@ -19,11 +19,18 @@ public class ItemCaseButtonScript : AbstractCaseButton {
 	}
 
 	public override void addSpell(Spell spell) {
-		
+		if (spell == null) {
+
+			removeSpell ();
+			return;
+		}
+		this.spell = spell;
+		this.GetComponent<Image> ().sprite = spell.icon;
 	}
 
 	public override void removeSpell() {
-		
+		this.spell = null;
+		this.GetComponent<Image> ().sprite = blankSprite;
 	}
 
 	public override void addItem(Item item) {

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Constants {
 
+	public static string ENEMY_TAG = "Enemy";
+
 	public static Vector3 GetMousePosition()
 	{
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
