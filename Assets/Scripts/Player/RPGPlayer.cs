@@ -10,6 +10,8 @@ public class RPGPlayer : GameUnit {
 	private int spellPoints = 0;
 	private List<Item> inventory = new List<Item> ();
 
+	public GameObject test;
+
 	void Start () {
 		base.Start ();
 		Player = this.gameObject;
@@ -34,6 +36,17 @@ public class RPGPlayer : GameUnit {
 			this.useSpell (actif[3]);
 		if (Input.GetKey(KeyCode.A))
 			this.addExp (10);
+		if (Input.GetKeyDown (KeyCode.E)) {
+			test.GetComponent<Item> ().take ();
+			this.addItemToInventory (test.GetComponent<Item> ());
+		}
+		if (Input.GetKeyDown (KeyCode.R)) {
+			Debug.Log (this.inventory [0] != null);
+			if (this.inventory [0] != null) {
+				if (this.inventory [0].use ())
+					this.removeItemToInventory (0);
+			}
+		}
 	}
 
 	public void setSpellActif(int[] spells)
