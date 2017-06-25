@@ -17,11 +17,15 @@ public class Heal : Spell {
 		base.Update ();
 	}
 
-	public override void use()
+	public override bool use()
 	{
-		GameObject g = GameObject.Instantiate(halo, RPGPlayer.Player.transform.position, Quaternion.LookRotation(Constants.GetMousePosition() - RPGPlayer.Player.transform.position));
-		g.transform.SetParent (RPGPlayer.Player.transform);
-		Destroy (g, 3.0f);
+		if (RPGPlayer.Player.GetComponent<RPGPlayer> ().addHp (this.getHeal ())) {
+			GameObject g = GameObject.Instantiate (halo, RPGPlayer.Player.transform.position, Quaternion.LookRotation (Constants.GetMousePosition () - RPGPlayer.Player.transform.position));
+			g.transform.SetParent (RPGPlayer.Player.transform);
+			Destroy (g, 3.0f);
+			return true;
+		}
+		return false;
 	}
 
 	public override string getValue()
