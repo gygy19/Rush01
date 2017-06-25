@@ -20,7 +20,6 @@ public class SpellCaseButtonScript : AbstractCaseButton {
 
 	public override void addSpell(Spell spell) {
 		if (spell == null) {
-		
 			removeSpell ();
 			return;
 		}

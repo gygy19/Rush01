@@ -19,5 +19,6 @@ public class PotionVie : Item {
 		RPGPlayer player = RPGPlayer.Player.GetComponent<RPGPlayer> ();
 		Debug.Log ("utilisation potion");
 		return (player.addHp ((int)(player.getMaxHp() * 0.3f)));
+		player.removeItemToInventory (this);
 	}
 }

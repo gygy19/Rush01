@@ -15,7 +15,6 @@ public class UIInventoryScript : MonoBehaviour {
 
 	private RPGPlayer player;
 
-
 	public static string LBL_EMPTY_SELECTION = "None selected object.";
 
 	// Use this for initialization
@@ -60,17 +59,5 @@ public class UIInventoryScript : MonoBehaviour {
 		foreach (GameObject o in contentObjects) {
 			o.SetActive (visible);
 		}
-	}
-
-	public void addItems() {
-		//TODO
-	}
-
-	public void addItem() {
-		//TODO
-	}
-
-	public void removeItem() {
-		//TODO
 	}
 }

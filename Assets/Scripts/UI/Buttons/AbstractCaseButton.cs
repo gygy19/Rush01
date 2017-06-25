@@ -8,6 +8,8 @@ using UnityEngine.UI;
 
 public abstract class AbstractCaseButton : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler {
 
+	public KeyCode keycode = KeyCode.None;
+
 	public bool blocked = false;
 	public bool duplicatable = false;
 	public bool isSelected = false;
