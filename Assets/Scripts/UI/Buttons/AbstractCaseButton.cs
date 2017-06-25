@@ -164,6 +164,7 @@ public abstract class AbstractCaseButton : MonoBehaviour, IPointerClickHandler, 
 	//Do this when the cursor enters the rect area of this selectable UI object.
 	public void OnPointerEnter(PointerEventData eventData)
 	{
+		UITransporteurScript.instance.setCurCase (this);
 		if (this.ondrag)
 			return ;
 		PointerScript.instance.setCurButton (this);
@@ -172,6 +173,7 @@ public abstract class AbstractCaseButton : MonoBehaviour, IPointerClickHandler, 
 	//Do this when the cursor exits the rect area of this selectable UI object.
 	public void OnPointerExit(PointerEventData eventData)
 	{
+		UITransporteurScript.instance.setCurCase (null);
 		if (this.ondrag)
 			return ;
 		if (PointerScript.instance.curButton () == this) {

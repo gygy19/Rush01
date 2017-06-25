@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour {
 	public bool				pauseGame;
 	public bool				isDying;
 	public float			dieTime;
+	public float			meleeTime;
+	public float			attackSpeed;
 	void Start () {
 		Camera = GameObject.Find ("Main Camera").GetComponent<Camera> ();
 		Agent = GetComponent<NavMeshAgent> ();
@@ -49,16 +51,19 @@ public class PlayerController : MonoBehaviour {
 
 	void meleeAttack()
 	{
-		Collider[] hitColliders = Physics.OverlapSphere(this.transform.position, 10f);
-		int i = 0;
-		while (i < hitColliders.Length)
-		{
-			if (hitColliders [i].gameObject.tag == Constants.ENEMY_TAG) {
-				EnemyController controller = hitColliders [i].gameObject.GetComponent<EnemyController> ();
-				if (controller.isDying == false)
-					controller.takeDamage(RPGPlayer.getDamage());
+		float diff = Time.fixedTime - meleeTime;
+		if (diff > attackSpeed) {
+			Collider[] hitColliders = Physics.OverlapSphere (this.transform.position, 1f);
+			int i = 0;
+			while (i < hitColliders.Length) {
+				if (hitColliders [i].gameObject.tag == Constants.ENEMY_TAG) {
+					EnemyController controller = hitColliders [i].gameObject.GetComponent<EnemyController> ();
+					if (controller.isDying == false)
+						controller.takeDamage (RPGPlayer.getDamage ());
+				}
+				i++;
 			}
-			i++;
+			meleeTime = Time.fixedTime;
 		}
 	}
 

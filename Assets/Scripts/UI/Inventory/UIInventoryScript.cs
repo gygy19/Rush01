@@ -40,8 +40,6 @@ public class UIInventoryScript : MonoBehaviour {
 	private void _checkOnClickCase() {
 		foreach (ItemCaseButtonScript c in cases) {
 			if (c.isSelected) {
-
-				Debug.Log("Click On Case Inventory n: " + c.getCaseId());
 				if (c.item == null) {
 					infosCase.removeItem ();
 					lblInfos.text = LBL_EMPTY_SELECTION;
