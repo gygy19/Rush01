@@ -41,6 +41,8 @@ public class UISpellsScript : MonoBehaviour {
 			exitButton.isSelected = false;
 			setVisible (false);
 		}
+		if (this.visible == false)
+			return;
 		foreach (GameObject spell in player.spells) {
 			bool contain = false;
 			foreach (UISpellScript spellSlot in spellsSlots) {
