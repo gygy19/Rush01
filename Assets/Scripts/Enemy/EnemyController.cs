@@ -88,12 +88,6 @@ public class EnemyController : MonoBehaviour {
 		GetComponent<Animator> ().SetFloat (MovementEnum.MOVEMENT_FORWARD, 0);
 	}
 
-	void setAnimatorSpeed(int speed)
-	{
-		Animator animator = GetComponent<Animator> ();
-		animator.speed = speed;
-	}
-
 	void Update ()
 	{
 		if (playerController.pauseGame) {
@@ -102,7 +96,6 @@ public class EnemyController : MonoBehaviour {
 		}
 			
 		if (isFollowing) {
-			setAnimatorSpeed (1);
 			if (playerController.RPGPlayer.getHp () > 0) {
 				isAroundPlayer ();
 				if (this.playerController.transform.position.x != followingPosition.x || this.playerController.transform.position.y != followingPosition.y || this.playerController.transform.position.z != followingPosition.z) {
@@ -111,11 +104,6 @@ public class EnemyController : MonoBehaviour {
 			} else {
 				GetComponent<Animator> ().SetBool (MovementEnum.MOVEMENT_ATTACK, false);
 			}
-		} else {
-			setAnimatorSpeed (5);
-			this.followingPosition = this.playerController.transform.position;
-			this.Agent.SetDestination (this.playerController.transform.position);
-			GetComponent<Animator> ().SetFloat (MovementEnum.MOVEMENT_FORWARD, 0.1f);
 		}
 	}
 
