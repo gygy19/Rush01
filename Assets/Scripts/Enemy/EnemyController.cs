@@ -9,12 +9,16 @@ public class EnemyController : MonoBehaviour {
 	private NavMeshAgent		Agent;
 	public	bool 				isFollowing;
 	public	Vector3 			followingPosition;
-	public	float				speed;
+	public	float				moveSpeed;
+	public	float				attackSpeed;
+	public	RPGEnemy 			RPGEnemy;
+	public	float				attackTime;
 
 	void Start ()
 	{
 		this.playerController = GameObject.Find ("Player").GetComponent<PlayerController> ();
 		this.Agent = GetComponent<NavMeshAgent> ();
+		this.RPGEnemy = GetComponent<RPGEnemy> ();
 		this.isFollowing = false;
 	}
 
@@ -23,7 +27,7 @@ public class EnemyController : MonoBehaviour {
 		this.followingPosition = this.playerController.transform.position;
 		this.Agent.SetDestination (this.playerController.transform.position);
 		this.isFollowing = true;
-		GetComponent<Animator> ().SetFloat (MovementEnum.MOVEMENT_FORWARD, speed);
+		GetComponent<Animator> ().SetFloat (MovementEnum.MOVEMENT_FORWARD, moveSpeed);
 	}
 
 	void UnFollowPlayer()
@@ -45,8 +49,13 @@ public class EnemyController : MonoBehaviour {
 
 	void attackPlayer() 
 	{
-		rotateToPlayer ();
-		GetComponent<Animator> ().SetBool (MovementEnum.MOVEMENT_ATTACK, true);
+		float diff = Time.fixedTime - attackTime;
+		if (diff > attackSpeed) {
+			rotateToPlayer ();
+			GetComponent<Animator> ().SetBool (MovementEnum.MOVEMENT_ATTACK, true);
+			RPGEnemy.Attack (playerController);
+			attackTime = Time.fixedTime;
+		}
 	}
 
 	void isAroundPlayer()

@@ -15,9 +15,10 @@ public class UIBannerScript : MonoBehaviour{
 	public ProgressBarScript manaBarre;
 	public ProgressBarScript lifeBarre;
 
-	public RPGPlayer player;
+	private RPGPlayer player;
 	// Use this for initialization
 	void Start () {
+		this.player = GameObject.Find ("Player").GetComponent<RPGPlayer>();
 	}
 	
 	// Update is called once per frame

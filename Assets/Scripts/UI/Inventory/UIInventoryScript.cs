@@ -13,11 +13,14 @@ public class UIInventoryScript : MonoBehaviour {
 	public ItemCaseButtonScript infosCase;
 	public Text lblInfos;
 
+	private RPGPlayer player;
+
 
 	public static string LBL_EMPTY_SELECTION = "None selected object.";
 
 	// Use this for initialization
 	void Start () {
+		this.player = GameObject.Find ("Player").GetComponent<RPGPlayer>();
 		foreach (GameObject o in contentObjects) {
 			o.SetActive (false);
 		}
