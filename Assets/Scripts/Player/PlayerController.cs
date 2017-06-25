@@ -9,13 +9,22 @@ public class PlayerController : MonoBehaviour {
 	private NavMeshAgent	Agent;
 	bool					isMooving;
 	public bool 			lockedCamera;
+	public RPGPlayer		RPGPlayer;
+	public bool				pauseGame;
 
 	void Start () {
 		Camera = GameObject.Find ("Main Camera").GetComponent<Camera> ();
 		Agent = GetComponent<NavMeshAgent> ();
+		RPGPlayer = GetComponent<RPGPlayer> ();
 		isMooving = false;
 		lockedCamera = false;
 		setDefaultCameraPostion ();
+		pauseGame = false;
+	}
+
+	public void Die () {
+		Debug.Log ("You're dead !");
+		pauseGame = true;
 	}
 
 	void setDefaultCameraPostion()
