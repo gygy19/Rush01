@@ -69,17 +69,24 @@ public class PlayerController : MonoBehaviour {
 
 	void takeItem()
 	{
+		Debug.Log ("take item");
 		Collider[] hitColliders = Physics.OverlapSphere (this.transform.position, 1f);
 		int i = 0;
 		while (i < hitColliders.Length) {
 				if (hitColliders [i].gameObject.tag == Constants.ITEM_TAG) {
 					Item it = hitColliders [i].gameObject.GetComponent<Item> ();
 					it.take ();
+				Debug.Log ("take weapon");
 					RPGPlayer.Player.GetComponent<RPGPlayer> ().addItemToInventory (it);
 					break;
 				}
 			i++;
 		}
+	}
+
+	void dropItem() 
+	{
+		RPGPlayer.Player.GetComponent<RPGPlayer> ().dropItem ();
 	}
 
 	void catchMovement()
@@ -143,6 +150,8 @@ public class PlayerController : MonoBehaviour {
 		}
 		if (Input.GetKeyDown (KeyCode.E))
 			this.takeItem ();
+		if (Input.GetKeyDown (KeyCode.D))
+			this.dropItem ();
 		catchMovement ();
 		if (Agent.remainingDistance <= 3f && Agent.remainingDistance != 0) {
 			StopMovement ();
