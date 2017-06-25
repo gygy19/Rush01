@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour {
 
 	void catchMovement()
 	{
-		if (Input.GetMouseButtonDown(MouseClickEnum.RIGHT_CLICK)) {
+		if (Input.GetMouseButton(MouseClickEnum.RIGHT_CLICK)) {
 			rotateToMouse ();
 			Vector3 position = Constants.GetMousePosition ();
 			if (position.x != 0 && position.y != 0 && position.z != 0) {
