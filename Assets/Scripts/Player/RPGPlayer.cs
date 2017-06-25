@@ -22,6 +22,7 @@ public class RPGPlayer : GameUnit {
 		actif [3] = -1;
 
 		actif [0] = 0;
+		actif [1] = 1;
 	}
 	
 	void Update () {
