@@ -33,9 +33,14 @@ public class GameUnit : MonoBehaviour {
 		this.timeRegenMana += Time.deltaTime;
 	}
 
-	protected void setLevel(int l)
+	public virtual void setLevel(int l)
 	{
 		this.exp = (int)(Mathf.Exp((l - -40) / 8.7f) - 111);
+	}
+
+	public void setHp(int value)
+	{
+		this.hp = value;
 	}
 
 	public int getHp()
@@ -155,5 +160,10 @@ public class GameUnit : MonoBehaviour {
 			this.competancePoint--;
 			this.hp++;
 		}
+	}
+
+	public void updateCompetancePoint(int points)
+	{
+		this.competancePoint = points;
 	}
 }

@@ -6,4 +6,5 @@ public static class MovementEnum
 {
 	public const string MOVEMENT_FORWARD = "Forward";
 	public const string MOVEMENT_ATTACK = "Attack";
+	public const string MOVEMENT_DEAD = "dead";
 }

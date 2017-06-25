@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour {
 	public bool 			lockedCamera;
 	public RPGPlayer		RPGPlayer;
 	public bool				pauseGame;
+	public bool				isDying;
+	public float			dieTime;
 
 	void Start () {
 		Camera = GameObject.Find ("Main Camera").GetComponent<Camera> ();
@@ -23,8 +25,11 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	public void Die () {
-		Debug.Log ("You're dead !");
+		RPGPlayer.setHp (0);
+		dieTime = Time.fixedTime;
 		pauseGame = true;
+		isDying = true;
+		GetComponent<Animator> ().SetBool (MovementEnum.MOVEMENT_DEAD, true);
 	}
 
 	void setDefaultCameraPostion()
@@ -62,7 +67,29 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
+	void endGame()
+	{
+		//openEndMenu ();
+		Debug.Log ("You lose little noob !");
+	}
+
+	void onPauseGame()
+	{
+		if (isDying) {
+			float diff = Time.fixedTime - dieTime;
+			if (diff > 3f) {
+				GetComponent<Animator> ().SetBool (MovementEnum.MOVEMENT_DEAD, false);
+				isDying = false;
+				endGame ();
+			}
+		}
+	}
+
 	void Update () {
+		if (pauseGame) {
+			onPauseGame ();
+			return;
+		}
 		catchMovement ();
 		if (Agent.remainingDistance <= 3f && Agent.remainingDistance != 0) {
 			StopMovement ();

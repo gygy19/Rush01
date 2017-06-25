@@ -14,9 +14,38 @@ public class RPGEnemy : GameUnit {
 	{
 		RPGPlayer Player = Controller.RPGPlayer;
 		int hitDamage = base.getDamage ();
-		Player.damage (hitDamage);
-		if (Player.getHp () < 0) {
+		if ((Player.getHp () - hitDamage) <= 0) {
 			Controller.Die ();
+		} else {
+			Player.damage (hitDamage);
+		}
+	}
+
+	public override void setLevel(int level)
+	{
+		base.setLevel (level);
+		base.updateCompetancePoint(level * 5);
+	
+		while (this.getcompetancePoint () != 0) {
+			int rand = Random.Range (1, 5);
+			switch (rand)
+			{
+				case UpgradeEnum.UPGRADE_STRENGTH:
+					this.boostStr ();
+				break;
+
+				case UpgradeEnum.UPGRADE_INTEL:
+					this.boostIntel ();
+				break;
+
+				case UpgradeEnum.UPGRADE_CONST:
+					this.boostConstitution();
+				break;
+
+				case UpgradeEnum.UPGRADE_AGILITY:
+					this.boostAgi();
+				break;
+			}
 		}
 	}
 
