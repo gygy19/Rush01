@@ -31,4 +31,5 @@ public abstract class Spell : MonoBehaviour {
 
 	abstract public void use ();
 	abstract public string getUpgrade ();
+	abstract public string getValue ();
 }

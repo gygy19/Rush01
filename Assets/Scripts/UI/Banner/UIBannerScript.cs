@@ -11,6 +11,11 @@ public class UIBannerScript : MonoBehaviour{
 	public UICaracteristiquesScript caracteristiquePanel;
 	public UISpellsScript spellsPanel;
 	public UIInventoryScript inventoryPanel;
+
+	public ProgressBarScript manaBarre;
+	public ProgressBarScript lifeBarre;
+
+	public RPGPlayer player;
 	// Use this for initialization
 	void Start () {
 	}
@@ -27,6 +32,8 @@ public class UIBannerScript : MonoBehaviour{
 				OnclickCase (c);
 			}
 		}
+		manaBarre.UpdatePurcent ((float)(100 * player.getHp() / player.getMaxHp()));
+		manaBarre.UpdatePurcent ((float)(100 * player.getMana() / player.getMaxMana()));
 	}
 
 	public void OnOpenUICarac() {
