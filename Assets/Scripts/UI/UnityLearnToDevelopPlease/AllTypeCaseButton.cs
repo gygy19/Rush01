@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using System.Linq;
+using UnityEngine.AI;
 using UnityEngine.UI;
 
 public class AllTypeCaseButton : AbstractCaseButton {
