@@ -33,14 +33,17 @@ public class UIBannerScript : MonoBehaviour{
 	}
 
 	public void OnOpenUICarac() {
+		this.player.GetComponent<PlayerController> ().pauseGame = true;
 		caracteristiquePanel.setVisible (!caracteristiquePanel.visible);
 	}
 
 	public void OnOpenUIInventory() {
+		this.player.GetComponent<PlayerController> ().pauseGame = true;
 		inventoryPanel.setVisible (!inventoryPanel.visible);
 	}
 
 	public void OnOpenUISpells() {
+		this.player.GetComponent<PlayerController> ().pauseGame = true;
 		spellsPanel.setVisible (!spellsPanel.visible);
 	}
 

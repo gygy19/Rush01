@@ -46,7 +46,8 @@ namespace DigitalRuby.PyroParticles
         public ParticleSystem[] ProjectileDestroyParticleSystemsOnCollision;
 
         [HideInInspector]
-        public FireProjectileCollisionDelegate CollisionDelegate;
+        public FireProjectileCollisionDelegate	CollisionDelegate;
+		public FireBall							FireBall;
 
         private bool collided;
 
@@ -105,5 +106,12 @@ namespace DigitalRuby.PyroParticles
                 }
             }
         }
+
+		void OnTriggerEnter(Collider other) {
+			if (other.gameObject.tag == Constants.ENEMY_TAG) {
+				EnemyController controller = other.gameObject.GetComponent<EnemyController> ();
+				controller.takeDamage(FireBall.getDamage ());
+			}
+		}
     }
 }

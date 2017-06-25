@@ -33,6 +33,7 @@ public class UICaracteristiquesScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (exitButton.isSelected) {
+			this.player.GetComponent<PlayerController> ().pauseGame = false;
 			exitButton.isSelected = false;
 			setVisible (false);
 		}
