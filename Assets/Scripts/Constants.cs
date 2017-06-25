@@ -5,6 +5,7 @@ using UnityEngine;
 public class Constants {
 
 	public static string ENEMY_TAG = "Enemy";
+	public static string ITEM_TAG = "Item";
 
 	public static Vector3 GetMousePosition()
 	{
