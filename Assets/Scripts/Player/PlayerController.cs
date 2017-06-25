@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
 
@@ -13,7 +14,8 @@ public class PlayerController : MonoBehaviour {
 	public bool				pauseGame;
 	public bool				isDying;
 	public float			dieTime;
-
+	public float			meleeTime;
+	public float			attackSpeed;
 	void Start () {
 		Camera = GameObject.Find ("Main Camera").GetComponent<Camera> ();
 		Agent = GetComponent<NavMeshAgent> ();
@@ -47,9 +49,27 @@ public class PlayerController : MonoBehaviour {
 		transform.rotation = Quaternion.LookRotation(newDir);
 	}
 
+	void meleeAttack()
+	{
+		float diff = Time.fixedTime - meleeTime;
+		if (diff > attackSpeed) {
+			Collider[] hitColliders = Physics.OverlapSphere (this.transform.position, 1f);
+			int i = 0;
+			while (i < hitColliders.Length) {
+				if (hitColliders [i].gameObject.tag == Constants.ENEMY_TAG) {
+					EnemyController controller = hitColliders [i].gameObject.GetComponent<EnemyController> ();
+					if (controller.isDying == false)
+						controller.takeDamage (RPGPlayer.getDamage ());
+				}
+				i++;
+			}
+			meleeTime = Time.fixedTime;
+		}
+	}
+
 	void catchMovement()
 	{
-		if (Input.GetMouseButton(MouseClickEnum.RIGHT_CLICK)) {
+		if (Input.GetMouseButton (MouseClickEnum.RIGHT_CLICK)) {
 			rotateToMouse ();
 			Vector3 position = Constants.GetMousePosition ();
 			if (position.x != 0 && position.y != 0 && position.z != 0) {
@@ -57,9 +77,14 @@ public class PlayerController : MonoBehaviour {
 				GetComponent<Animator> ().SetFloat (MovementEnum.MOVEMENT_FORWARD, 1);
 				isMooving = true;
 			}
+		} else if (Input.GetKey (KeyCode.Q)) {
+			meleeAttack ();
+			GetComponent<Animator> ().SetBool (MovementEnum.MOVEMENT_ATTACK, true);
+		} else {
+			GetComponent<Animator> ().SetBool (MovementEnum.MOVEMENT_ATTACK, false);
 		}
 	}
-		
+
 	public void StopMovement()
 	{
 		Agent.velocity = Vector3.zero;
@@ -80,11 +105,12 @@ public class PlayerController : MonoBehaviour {
 	void endGame()
 	{
 		//openEndMenu ();
-		Debug.Log ("You lose little noob !");
+		Debug.Log ("Game over !");
 	}
 
 	void onPauseGame()
 	{
+		StopMovement ();
 		if (isDying) {
 			float diff = Time.fixedTime - dieTime;
 			if (diff > 3f) {

@@ -110,7 +110,8 @@ namespace DigitalRuby.PyroParticles
 		void OnTriggerEnter(Collider other) {
 			if (other.gameObject.tag == Constants.ENEMY_TAG) {
 				EnemyController controller = other.gameObject.GetComponent<EnemyController> ();
-				controller.takeDamage(FireBall.getDamage ());
+				if (controller.isDying == false)
+					controller.takeDamage(FireBall.getDamage ());
 			}
 		}
     }

@@ -12,6 +12,7 @@ public class GameUnit : MonoBehaviour {
 	private float timeRegenMana = 0;
 	private int competancePoint = 0;
 	private int level = 0;
+	private Weapon weaponEquip = null;
 	[SerializeField]
 	protected int str, agi, intel ,constitution, hpBase, regenMana, manaBase;
 
@@ -92,9 +93,9 @@ public class GameUnit : MonoBehaviour {
 		return (int)Mathf.Max (Mathf.Floor (8.7f * Mathf.Log ((float)this.exp + 111f) + -40f), 1f);
 	}
 
-	public int getDamage()
+	virtual public int getDamage()
 	{
-		return Mathf.Max (Random.Range (str - VARIATIONDAMAGE, str + VARIATIONDAMAGE), 1);
+		return Mathf.Max (Random.Range (str - VARIATIONDAMAGE, str + VARIATIONDAMAGE), 1) + (weaponEquip != null ? weaponEquip.getDamage () : 0);
 	}
 
 	public int getMinDamage()
@@ -107,6 +108,11 @@ public class GameUnit : MonoBehaviour {
 		return this.str + VARIATIONDAMAGE;
 	}
 
+	public void equipWeapon(Weapon weap)
+	{
+		this.weaponEquip = weap;
+	}
+
 	public void damage(int damage)
 	{
 		this.hp -= damage;
@@ -114,8 +120,6 @@ public class GameUnit : MonoBehaviour {
 
 	public bool addHp(int hp)
 	{
-		Debug.Log (hp);
-		Debug.Log (this.hp >= getMaxHp ());
 		if (this.hp >= getMaxHp ())
 			return false;
 		if (this.hp + hp > getMaxHp ()) {

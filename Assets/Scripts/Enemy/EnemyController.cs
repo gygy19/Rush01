@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class EnemyController : MonoBehaviour {
 
@@ -19,6 +20,7 @@ public class EnemyController : MonoBehaviour {
 
 	public bool 				isDying;
 	public float				dieTime;
+	public GameObject			hitText;
 	void Start ()
 	{
 		this.playerController = GameObject.Find ("Player").GetComponent<PlayerController> ();
@@ -159,15 +161,28 @@ public class EnemyController : MonoBehaviour {
 
 	public void Die()
 	{
+		this.UnFollowPlayer ();
 		playerController.RPGPlayer.addExp (this.experience);
 		GetComponent<Animator> ().SetBool (MovementEnum.MOVEMENT_DEAD, true);
 		this.isDying = true;
 		this.dieTime = Time.fixedTime;
 		Debug.Log ("An enemy is dying ! Well played you won " + this.experience + " points of experience !");
+		this.OnPausedGame ();
+	}
+
+	public void popCurrentHit(int valueDamage)
+	{
+		GameObject currentHit = GameObject.Instantiate (this.hitText);
+		currentHit.GetComponent<Text>().text = " - " + valueDamage.ToString();
+		currentHit.GetComponent<Text> ().fontSize = 30;
+
+		currentHit.transform.SetParent(GameObject.Find ("Canvas").GetComponent<Canvas>().transform);
+		currentHit.transform.position = new Vector3 (83.6f, 174.5f, 0f);
 	}
 
 	public void takeDamage(int value)
 	{
+		this.popCurrentHit (value);
 		this.RPGEnemy.damage (value);
 		if (this.RPGEnemy.getHp () <= 0) {
 			this.Die ();	

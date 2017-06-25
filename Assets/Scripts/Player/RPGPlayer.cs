@@ -22,21 +22,22 @@ public class RPGPlayer : GameUnit {
 		actif [3] = -1;
 
 		actif [0] = 0;
+		actif [1] = 1;
 	}
 	
 	void Update () {
 		base.Update ();
-		if (Input.GetKeyDown (KeyCode.Alpha1) && actif[0] != -1)
+		/*if (Input.GetKeyDown (KeyCode.Alpha1) && actif[0] != -1)
 			this.useSpell (actif[0]);
 		if (Input.GetKeyDown (KeyCode.Alpha2) && actif[1] != -1)
 			this.useSpell (actif[1]);
 		if (Input.GetKeyDown (KeyCode.Alpha3) && actif[2] != -1)
 			this.useSpell (actif[2]);
 		if (Input.GetKeyDown (KeyCode.Alpha4) && actif[3] != -1)
-			this.useSpell (actif[3]);
+			this.useSpell (actif[3]);*/
 		if (Input.GetKey(KeyCode.A))
 			this.addExp (10);
-		if (Input.GetKeyDown (KeyCode.E)) {
+		/*if (Input.GetKeyDown (KeyCode.E)) {
 			test.GetComponent<Item> ().take ();
 			this.addItemToInventory (test.GetComponent<Item> ());
 		}
@@ -46,7 +47,7 @@ public class RPGPlayer : GameUnit {
 				if (this.inventory [0].use ())
 					this.removeItemToInventory (0);
 			}
-		}
+		}*/
 	}
 
 	public void setSpellActif(int[] spells)
@@ -70,6 +71,15 @@ public class RPGPlayer : GameUnit {
 	public bool useSpell(int id)
 	{
 		Spell s = this.getSpell (id);
+		if (s && this.mana >= s.mana) {
+			s.use ();
+			this.mana -= s.mana;
+		}
+		return false;
+	}
+
+	public bool useSpell(Spell s)
+	{
 		if (s && this.mana >= s.mana) {
 			s.use ();
 			this.mana -= s.mana;
@@ -111,11 +121,21 @@ public class RPGPlayer : GameUnit {
 
 	public void addItemToInventory(Item it)
 	{
+		UIBannerScript.instance.addItem (it);
 		this.inventory.Add (it);
 	}
 
 	public void removeItemToInventory(int id)
 	{
+		UIBannerScript.instance.removeItem (this.inventory[id]);
 		this.inventory.RemoveAt (id);
+	}
+
+	public void removeItemToInventory(Item it)
+	{
+		if (this.inventory.Contains (it)) {
+			UIBannerScript.instance.removeItem (it);
+			this.inventory.Remove (it);
+		}
 	}
 }

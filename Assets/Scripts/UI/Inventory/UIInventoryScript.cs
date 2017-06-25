@@ -15,7 +15,6 @@ public class UIInventoryScript : MonoBehaviour {
 
 	private RPGPlayer player;
 
-
 	public static string LBL_EMPTY_SELECTION = "None selected object.";
 
 	// Use this for initialization
@@ -41,8 +40,6 @@ public class UIInventoryScript : MonoBehaviour {
 	private void _checkOnClickCase() {
 		foreach (ItemCaseButtonScript c in cases) {
 			if (c.isSelected) {
-
-				Debug.Log("Click On Case Inventory n: " + c.getCaseId());
 				if (c.item == null) {
 					infosCase.removeItem ();
 					lblInfos.text = LBL_EMPTY_SELECTION;
@@ -60,17 +57,5 @@ public class UIInventoryScript : MonoBehaviour {
 		foreach (GameObject o in contentObjects) {
 			o.SetActive (visible);
 		}
-	}
-
-	public void addItems() {
-		//TODO
-	}
-
-	public void addItem() {
-		//TODO
-	}
-
-	public void removeItem() {
-		//TODO
 	}
 }

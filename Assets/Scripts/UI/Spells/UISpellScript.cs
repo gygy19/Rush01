@@ -1,9 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using System.Linq;
 using UnityEngine.UI;
 
-public class UISpellScript : MonoBehaviour {
+public class UISpellScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
 
 	public Text name;
 	public Text lblCountLevel;
@@ -14,8 +17,11 @@ public class UISpellScript : MonoBehaviour {
 
 	public Spell spell;
 
+	private RPGPlayer player;
+
 	// Use this for initialization
 	void Start () {
+		this.player = GameObject.Find ("Player").GetComponent<RPGPlayer>();
 		this.gameObject.SetActive (active);
 	}
 	
@@ -29,7 +35,7 @@ public class UISpellScript : MonoBehaviour {
 		}
 
 		if (this.buttonLevelup.isSelected) {
-			spellPanel.levelUpSpell (spell);
+			this.player.useSpellPoint(spell);
 			this.buttonLevelup.isSelected = false;
 		}
 	}
@@ -50,5 +56,17 @@ public class UISpellScript : MonoBehaviour {
 		spellCase.removeSpell ();
 		this.spell = null;
 		this.name.text = "";
+	}
+
+	//Do this when the cursor enters the rect area of this selectable UI object.
+	public void OnPointerEnter(PointerEventData eventData)
+	{
+		spellPanel.selectSpell (this.spell);
+	}
+
+	//Do this when the cursor exits the rect area of this selectable UI object.
+	public void OnPointerExit(PointerEventData eventData)
+	{
+		spellPanel.selectSpell (null);
 	}
 }
