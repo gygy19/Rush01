@@ -23,7 +23,11 @@ public class UISpellScript : MonoBehaviour {
 	void Update () {
 		if (active != this.gameObject.active)
 			this.gameObject.SetActive (active);
-		
+
+		if (spell != null) {
+			lblCountLevel.text = "" + spell.getLevel ();
+		}
+
 		if (this.buttonLevelup.isSelected) {
 			spellPanel.levelUpSpell (spell);
 			this.buttonLevelup.isSelected = false;
