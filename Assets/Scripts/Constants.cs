@@ -13,7 +13,7 @@ public class Constants {
 		RaycastHit[] hits = Physics.RaycastAll (ray);
 		foreach (RaycastHit hitInfo in hits)
 		{
-			if (hitInfo.collider.gameObject.name == "Cemetery")
+			if (hitInfo.collider.gameObject.tag == "Floor")
 				return (hitInfo.point); 
 		}
 		return Vector3.zero;

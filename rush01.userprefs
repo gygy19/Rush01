@@ -1,13 +1,18 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/UI/Caracteristiques/UICaracteristiquesScript.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Level.cs">
     <Files>
+      <File FileName="Assets/Scripts/Player/PlayerController.cs" Line="107" Column="20" />
       <File FileName="Assets/Standard Assets/Environment/Water/Water4/Shaders/FXWater4Advanced.shader" Line="46" Column="16" />
-      <File FileName="Assets/Scripts/Player/PlayerController.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Enemy/EnemyController.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Enemy/EnemyController.cs" Line="32" Column="33" />
       <File FileName="Assets/Scripts/Enums/MovementEnum.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/UI/Spells/UISpellsScript.cs" Line="15" Column="17" />
+      <File FileName="Assets/Scripts/UI/Spells/UISpellsScript.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/UI/Caracteristiques/UICaracteristiquesScript.cs" Line="25" Column="39" />
+      <File FileName="Assets/Scripts/Teleport.cs" Line="31" Column="1" />
+      <File FileName="Assets/Scripts/Level.cs" Line="25" Column="1" />
+      <File FileName="Assets/Scripts/Enemy/RPGEnemy.cs" Line="14" Column="3" />
+      <File FileName="Assets/Scripts/Player/RPGPlayer.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Constants.cs" Line="15" Column="49" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
