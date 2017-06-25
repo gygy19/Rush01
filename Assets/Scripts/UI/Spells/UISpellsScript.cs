@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UISpellsScript : MonoBehaviour {
 
 	public ButtonScript exitButton;
 	public GameObject[] contentObjects;
 	public UISpellScript[] spellsSlots;
+	public Text spellsPoints;
 	public bool visible = false;
 
 	private RPGPlayer player;
@@ -40,6 +42,7 @@ public class UISpellsScript : MonoBehaviour {
 				addSpell (spell);
 			}
 		}
+		spellsPoints.text = "" + player.getSpellPoints ();
 	}
 
 	public void setVisible(bool visible) {
@@ -50,7 +53,7 @@ public class UISpellsScript : MonoBehaviour {
 	}
 
 	public void levelUpSpell(Spell spell) {
-		//TODO
+		spell.up ();
 	}
 
 	public void addSpell(Spell spell) {
