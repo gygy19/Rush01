@@ -2,6 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+#if UNITY_EDITOR
+using UnityEditor;
+
+[CustomEditor(typeof(Weapon))]
+public class WeaponEditor : Editor
+{
+	public override void OnInspectorGUI()
+	{
+		DrawDefaultInspector();
+
+		Weapon myScript = (Weapon)target;
+		if(GUILayout.Button("save skin localTransform presets"))
+		{
+			myScript.localPosition = myScript.skin.transform.localPosition;
+			myScript.localRotation = myScript.skin.transform.localRotation;
+		}
+	}
+}
+#endif
+
 public class Weapon : Item {
 
 	public List<GameObject> weaponModels;
@@ -13,12 +33,16 @@ public class Weapon : Item {
 	public int levelUpBoostDamage;
 	public int baseAttackSpeed;
 	public float variatonAttackSpeed;
+
+	public Vector3 localPosition;
+	public Quaternion localRotation;
+
 //	private GameObject skin;
 
 	protected void Start () {
-		int rand = Random.Range (0, weaponModels.Count);
-		skin = weaponModels [rand];
-		base.Start ();
+//		int rand = Random.Range (0, weaponModels.Count);
+//		skin = weaponModels [rand];
+//		base.Start ();
 		IEnumerator routine = initializeData (0.1f);
 		this.StartCoroutine (routine);
 	}
@@ -53,6 +77,11 @@ public class Weapon : Item {
 
 	public override bool use()
 	{
-		return false;
+		RPGPlayer player = RPGPlayer.Player.GetComponent<RPGPlayer> ();
+		player.equipWeapon (this);
+		player.equipItem (this);
+//		skin.transform.localRotation = localRotation;
+//		skin.transform.localPosition = localPosition;
+		return true;
 	}
 }

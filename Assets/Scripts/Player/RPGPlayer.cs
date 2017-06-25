@@ -11,6 +11,8 @@ public class RPGPlayer : GameUnit {
 	private List<Item> inventory = new List<Item> ();
 
 	public GameObject test;
+	public Transform itemSlot;
+	public Item rightHandEquiped;
 
 	void Start () {
 		base.Start ();
@@ -136,6 +138,33 @@ public class RPGPlayer : GameUnit {
 		if (this.inventory.Contains (it)) {
 			UIBannerScript.instance.removeItem (it);
 			this.inventory.Remove (it);
+		}
+	}
+
+	public void equipItem(Item it)
+	{
+		if (rightHandEquiped) {
+			rightHandEquiped.transform.parent = null;
+			rightHandEquiped.skin.SetActive (false);
+			disequipWeapon ();
+			rightHandEquiped.GetComponent<SphereCollider> ().enabled = true;
+		}
+		it.skin.SetActive (true);
+		it.transform.SetParent(itemSlot);
+		it.transform.localPosition = new Vector3 (0, 0, 0);
+		it.transform.localRotation = new Quaternion ();
+		rightHandEquiped = it;
+		rightHandEquiped.GetComponent<SphereCollider> ().enabled = false;
+	}
+
+	public void dropItem() {
+		if (rightHandEquiped) {
+			rightHandEquiped.transform.parent = null;
+			disequipWeapon ();
+			rightHandEquiped.GetComponent<SphereCollider> ().enabled = true;
+			UIBannerScript.instance.removeItem (rightHandEquiped);
+			rightHandEquiped.transform.position = new Vector3 (rightHandEquiped.transform.position.x, rightHandEquiped.transform.position.y - 1, rightHandEquiped.transform.position.z);
+			rightHandEquiped = null;
 		}
 	}
 }

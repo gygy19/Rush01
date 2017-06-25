@@ -12,7 +12,8 @@ public class GameUnit : MonoBehaviour {
 	private float timeRegenMana = 0;
 	private int competancePoint = 0;
 	private int level = 0;
-	private Weapon weaponEquip = null;
+
+	public Weapon weaponEquip = null;
 	[SerializeField]
 	protected int str, agi, intel ,constitution, hpBase, regenMana, manaBase;
 
@@ -111,6 +112,11 @@ public class GameUnit : MonoBehaviour {
 	public void equipWeapon(Weapon weap)
 	{
 		this.weaponEquip = weap;
+	}
+
+	public Weapon disequipWeapon()
+	{
+		return this.weaponEquip;
 	}
 
 	public void damage(int damage)
