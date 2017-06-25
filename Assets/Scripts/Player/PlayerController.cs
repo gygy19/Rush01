@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour {
 		Agent = GetComponent<NavMeshAgent> ();
 		RPGPlayer = GetComponent<RPGPlayer> ();
 		isMooving = false;
-		lockedCamera = false;
+		//lockedCamera = false;
 		setDefaultCameraPostion ();
 		pauseGame = false;
 	}
