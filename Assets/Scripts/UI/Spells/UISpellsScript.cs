@@ -9,6 +9,11 @@ public class UISpellsScript : MonoBehaviour {
 	public GameObject[] contentObjects;
 	public UISpellScript[] spellsSlots;
 	public Text spellsPoints;
+
+	public Text spellSelectedName;
+	public Text spellSelectedLevel;
+	public Text spellSelectedDescription;
+
 	public bool visible = false;
 
 	private RPGPlayer player;
@@ -21,6 +26,9 @@ public class UISpellsScript : MonoBehaviour {
 		}
 		foreach (GameObject o in contentObjects) {
 			o.SetActive (false);
+		}
+		if (player.spells.Count > 0) {
+			selectSpell (player.spells[0]);
 		}
 	}
 	
@@ -50,6 +58,15 @@ public class UISpellsScript : MonoBehaviour {
 		foreach (GameObject o in contentObjects) {
 			o.SetActive (visible);
 		}
+	}
+
+	public void selectSpell(Spell spell) {
+		spellSelectedName.text = spell.name;
+		spellSelectedLevel.text = "" + spell.getLevel ();
+		spellSelectedDescription.text = "" +
+			"Damages   : " + spell.getValue() + "\n" +
+			"Mana cost : " + spell.mana + "\n" +
+			"Heal      : ";
 	}
 
 	public void levelUpSpell(Spell spell) {
