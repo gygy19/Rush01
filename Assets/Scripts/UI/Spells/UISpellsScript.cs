@@ -23,7 +23,8 @@ public class UISpellsScript : MonoBehaviour {
 	void Start () {
 		this.player = GameObject.Find ("Player").GetComponent<RPGPlayer>();
 		foreach (Spell spell in player.spells) {
-			addSpell (spell);
+			if (player.getLevel () >= spell.startLevel)
+				addSpell (spell);
 		}
 		foreach (GameObject o in contentObjects) {
 			o.SetActive (false);
@@ -48,7 +49,7 @@ public class UISpellsScript : MonoBehaviour {
 					break;
 				}
 			}
-			if (contain == false) {
+			if (contain == false && player.getLevel () >= spell.startLevel) {
 				addSpell (spell);
 			}
 		}
