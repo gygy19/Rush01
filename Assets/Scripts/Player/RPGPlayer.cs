@@ -7,6 +7,7 @@ public class RPGPlayer : GameUnit {
 	public int[] actif;
 	public List<Spell> spells = new List<Spell> ();
 	public static GameObject Player;
+	private int spellPoints = 0;
 
 	void Start () {
 		base.Start ();
@@ -41,6 +42,12 @@ public class RPGPlayer : GameUnit {
 		this.actif = spells;
 	}
 
+	protected override void levelUp()
+	{
+		base.levelUp ();
+		this.spellPoints++;
+	}
+
 	public Spell getSpell(int id)
 	{
 		if (id < spells.Count)
@@ -56,5 +63,20 @@ public class RPGPlayer : GameUnit {
 			this.mana -= s.mana;
 		}
 		return false;
-}
+	}
+
+	public int getSpellPoints()
+	{
+		return this.spellPoints;
+	}
+
+	public bool useSpellPoint(int idSpell)
+	{
+		if (this.spellPoints > 0) {
+			this.spellPoints--;
+			this.spells [idSpell].up ();
+			return true;
+		}
+		return false;
+	}
 }

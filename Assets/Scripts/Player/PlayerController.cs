@@ -24,22 +24,10 @@ public class PlayerController : MonoBehaviour {
 		Camera.transform.localRotation = new Quaternion (0.5f, 0.0f, 0.01f, 0.9f);
 	}
 
-	Vector3 GetMousePosition()
-	{
-		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-		RaycastHit[] hits = Physics.RaycastAll (ray);
-		foreach (RaycastHit hitInfo in hits)
-		{
-			if (hitInfo.collider.gameObject.name == "Cemetery")
-				return (hitInfo.point); 
-		}
-		return this.transform.position;
-	}
-
 	void catchMovement()
 	{
 		if (Input.GetMouseButtonDown(MouseClickEnum.RIGHT_CLICK)) {
-			Vector3 position = GetMousePosition ();
+			Vector3 position = Constants.GetMousePosition ();
 			if (position.x != 0 && position.y != 0 && position.z != 0) {
 				Agent.SetDestination (position);
 				GetComponent<Animator> ().SetFloat (MovementEnum.MOVEMENT_FORWARD, 1);
@@ -48,7 +36,7 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 		
-	void StopMovement()
+	public void StopMovement()
 	{
 		Agent.velocity = Vector3.zero;
 		Agent.ResetPath();
