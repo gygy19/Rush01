@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class UIBannerScript : MonoBehaviour{
 
-	public ButtonScript[] cases;
+	public AllTypeCaseButton[] cases;
 
 	public UICaracteristiquesScript caracteristiquePanel;
 	public UISpellsScript spellsPanel;
@@ -17,19 +17,36 @@ public class UIBannerScript : MonoBehaviour{
 
 	private RPGPlayer player;
 
+	public static UIBannerScript instance;
+
 	// Use this for initialization
 	void Start () {
+		instance = this;
 		this.player = GameObject.Find ("Player").GetComponent<RPGPlayer>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		_hookClickEntry ();
+		_hookNumericInput ();
 	}
 
 	private void _hookClickEntry() {
 		lifeBarre.UpdatePurcent ((float)(100 * player.getHp() / player.getMaxHp()));
 		manaBarre.UpdatePurcent ((float)(100 * player.getMana() / player.getMaxMana()));
+	}
+
+	private void _hookNumericInput() {
+		foreach (AllTypeCaseButton button in cases) {
+			if (Input.GetKeyDown (button.keycode)) {
+				if (button.spell != null) {
+					player.useSpell (button.spell);
+				}
+				if (button.item != null) {
+					button.item.take ();
+				}
+			}
+		}
 	}
 
 	public void OnOpenUICarac() {
@@ -49,6 +66,48 @@ public class UIBannerScript : MonoBehaviour{
 
 	public void OnclickCase(ButtonScript button) {
 		
+	}
+
+	public bool containsItem(Item it) {
+		foreach (ItemCaseButtonScript bt in inventoryPanel.cases) {
+			if (bt.item == it) {
+				return true;		
+			}
+		}
+		foreach (AllTypeCaseButton bt in cases) {
+			if (bt.item == it) {
+				return true;			
+			}
+		}
+		return false;
+	}
+
+	public void removeItem(Item it) {
+		foreach (ItemCaseButtonScript bt in inventoryPanel.cases) {
+			if (bt.item == it) {
+				bt.removeItem ();	
+			}
+		}
+		foreach (AllTypeCaseButton bt in cases) {
+			if (bt.item == it) {
+				bt.removeItem ();		
+			}
+		}
+	}
+
+	public void addItem(Item it) {
+		foreach (ItemCaseButtonScript bt in inventoryPanel.cases) {
+			if (bt.item == null) {
+				bt.addItem (it);
+				return;
+			}
+		}
+		foreach (AllTypeCaseButton bt in cases) {
+			if (bt.item == null) {
+				bt.addItem (it);
+				return;
+			}
+		}
 	}
 
 }

@@ -13,6 +13,7 @@ public class UISpellsScript : MonoBehaviour {
 	public Text spellSelectedName;
 	public Text spellSelectedLevel;
 	public Text spellSelectedDescription;
+	public AbstractCaseButton spellInfo;
 
 	public bool visible = false;
 
@@ -57,21 +58,29 @@ public class UISpellsScript : MonoBehaviour {
 	public void setVisible(bool visible) {
 		this.visible = visible;
 		foreach (GameObject o in contentObjects) {
-			o.SetActive (visible);
+				o.SetActive (visible);
 		}
 	}
 
 	public void selectSpell(Spell spell) {
-		spellSelectedName.text = spell.name;
-		spellSelectedLevel.text = "" + spell.getLevel ();
-		spellSelectedDescription.text = "" +
-			"Damages   : " + spell.getValue() + "\n" +
+		if (spell != null) {
+			spellSelectedName.text = spell.name;
+			spellSelectedLevel.text = "" + spell.getLevel ();
+			spellSelectedDescription.text = "" +
+			"Damages   : " + spell.getValue () + "\n" +
 			"Mana cost : " + spell.mana + "\n" +
 			"Heal      : ";
-	}
-
-	public void levelUpSpell(Spell spell) {
-		spell.up ();
+			spellInfo.addSpell (spell);
+		} else {
+			/*if (player.spells.Count > 0) {
+				selectSpell (player.spells [0]);
+				return;
+			}*/
+			spellSelectedName.text = "";
+			spellSelectedLevel.text = "0";
+			spellSelectedDescription.text = "";
+			spellInfo.addSpell (null);
+		}
 	}
 
 	public void addSpell(Spell spell) {
