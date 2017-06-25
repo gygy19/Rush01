@@ -9,10 +9,11 @@ public class UISpellsScript : MonoBehaviour {
 	public UISpellScript[] spellsSlots;
 	public bool visible = false;
 
-	public RPGPlayer player;
+	private RPGPlayer player;
 
 	// Use this for initialization
 	void Start () {
+		this.player = GameObject.Find ("Player").GetComponent<RPGPlayer>();
 		foreach (Spell spell in player.spells) {
 			addSpell (spell);
 		}

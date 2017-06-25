@@ -18,10 +18,11 @@ public class UICaracteristiquesScript : MonoBehaviour {
 	public UIStatScript Intelligence;
 	public UIStatScript Constitution;
 
-	public RPGPlayer player;
+	private RPGPlayer player;
 
 	// Use this for initialization
 	void Start () {
+		this.player = GameObject.Find ("Player").GetComponent<RPGPlayer>();
 		foreach (GameObject o in contentObjects) {
 			o.SetActive (false);
 		}
